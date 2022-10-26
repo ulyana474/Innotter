@@ -1,4 +1,22 @@
+{% load static %}
 <html>
-    <title>Innotter</title>
-    <input>
+    <head>
+        <title>Innotter</title>
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+    <body>
+        {% for post in posts %}
+            <div>
+                <p>published: {{ post.published_date }}</p>
+                <h1><a href="">{{ post.title }}</a></h1>
+                <p>{{ post.text|linebreaksbr }}</p>
+            </div>
+        {% endfor %}
+        <form method="POST" action="/search">
+            {% csrf_token %}
+            <input type="text" name="textfield">
+            
+            <button type="submit">Upload text</button>
+        </form>            
+    </body>
 </html>
