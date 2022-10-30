@@ -21,18 +21,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-q_kw)jg6fo$ir$b%%588tnp+pso5&u=w#&70xn7hmo7)yl5-5#'
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
-DEBUG = int(os.environ.get("DEBUG", default=0))
+SECRET_KEY = 'django-insecure-q_kw)jg6fo$ir$b%%588tnp+pso5&u=w#&70xn7hmo7)yl5-5#'
+DEBUG = 1
 # 'DJANGO_ALLOWED_HOSTS' должен быть в виде одной строки с хостами разделенными символом пробела
 # Для примера: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '.pythonanywhere.com']
+
 
 
 # Application definition
