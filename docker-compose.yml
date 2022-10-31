@@ -24,5 +24,7 @@ services:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
       - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+    entrypoint: 
+      - ./.entrypoint.sh
 volumes:
   postgres_data:
