@@ -22,9 +22,9 @@ load_dotenv()  # loads the configs from .env
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG')
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split()
+SECRET_KEY = os.getenv('SECRET_KEY', "")
+DEBUG = os.getenv('DEBUG', 0)
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "").split()
 
 # Application definition
 
