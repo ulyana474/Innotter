@@ -4,19 +4,19 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${PGR_USER}
+      - POSTGRES_PASSWORD=${PGR_PASSWORD}
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
-      - "8000:8000"
+      - ${PORTS}
     environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_NAME=${PGR_NAME}
+      - POSTGRES_USER=${PGR_USER}
+      - POSTGRES_PASSWORD=${PGR_PASSWORD}
     depends_on:
       - db
