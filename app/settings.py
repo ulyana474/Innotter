@@ -27,15 +27,17 @@ DEBUG = os.getenv('DEBUG', 0)
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "").split()
 
 # Application definition
+AUTH_USER_MODEL = 'app.User'
 
 INSTALLED_APPS = [
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'app.apps.AppConfig'
+    'app',
 ]
 
 MIDDLEWARE = [
