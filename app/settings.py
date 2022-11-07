@@ -26,9 +26,6 @@ SECRET_KEY = os.getenv('SECRET_KEY', "")
 DEBUG = os.getenv('DEBUG', 0)
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "").split()
 
-# Application definition
-AUTH_USER_MODEL = 'app.User'
-
 INSTALLED_APPS = [
     'rest_framework',
     'django.contrib.admin',
@@ -38,7 +35,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'users',
 ]
+
+# Application definition
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
