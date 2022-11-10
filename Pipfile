@@ -5,8 +5,10 @@ name = "pypi"
 
 [packages]
 django = "*"
-psycopg2 = "*"
 python-dotenv = "*"
+djangorestframework = "*"
+psycopg2-binary = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
