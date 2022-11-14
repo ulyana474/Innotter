@@ -28,10 +28,22 @@ class UserViewSet(viewsets.GenericViewSet,
     def user_page(self, request, pk=None):
         try:
             page_number = int(request.GET['page_number'])
+            post_number = int(request.GET.get('post', '-1'))
+            if(post_number < 0):
+                user = User.objects.get(pk=pk)
+                pages = user.pages.all()
+                try:
+                    page = pages[page_number]
+                except IndexError as e:
+                    content = {'page index': str(e)}
+                    return Response(content, status=status.HTTP_404_NOT_FOUND)
+                serializer = PageSerializer(page, many=False)
+                return Response({"result": serializer.data})
             post_number = int(request.GET['post'])
         except ValueError as e:
             content = {"can't convert to integer": str(e)}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
+
         user = User.objects.get(pk=pk)
         pages = user.pages.all()
         serializer_post = PostSerializer()
@@ -44,13 +56,10 @@ class UserViewSet(viewsets.GenericViewSet,
             except IndexError as e:
                 content = {'post index': str(e)}
                 return Response(content, status=status.HTTP_404_NOT_FOUND)
-            serializer = PageSerializer(page, many=False)
+
             serializer_post = PostSerializer(post, many=False)
-        
         except IndexError as e:
             content = {'page index': str(e)}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
 
         return Response({"result": serializer_post.data})
-        
-        

@@ -15,3 +15,6 @@ class User(AbstractUser):
     
     title = models.CharField(max_length=80)
     is_blocked = models.BooleanField(default=False)
+
+class Tag(models.Model):
+    name = models.CharField(max_length=30, unique=True)
