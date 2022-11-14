@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'app',
     'users',
     'pages',
+    'posts',
 ]
 
 # Application definition

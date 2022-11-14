@@ -1,11 +1,11 @@
+from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import viewsets, mixins
+from rest_framework.viewsets import GenericViewSet
+
 from .models import *
 from .serializers import *
-from rest_framework.viewsets import GenericViewSet
-from users.serializers import UserSerializer
-from pages.serializers import PageSerializer
+from posts.serializers import *
 
 class UserViewSet(viewsets.GenericViewSet,
                             mixins.ListModelMixin,
@@ -17,15 +17,40 @@ class UserViewSet(viewsets.GenericViewSet,
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    # def get_queryset(self):
-    #     owner = self.kwargs['owner']
-    #     return Page.objects.filter(page_owner=owner)
-
     @action(methods=['get'], detail=True)
-    def page(self, request, pk=None):
+    def pages(self, request, pk=None):
         user = User.objects.get(pk=pk)
-        page = Page.objects.filter(owner=pk)
         pages = user.pages.all()
         serializer = PageSerializer(pages, many=True)
         return Response({"result": serializer.data})
+
+    @action(methods=['get'], detail=True)
+    def user_page(self, request, pk=None):
+        try:
+            page_number = int(request.GET['page_number'])
+            post_number = int(request.GET['post'])
+        except ValueError as e:
+            content = {"can't convert to integer": str(e)}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
+        user = User.objects.get(pk=pk)
+        pages = user.pages.all()
+        serializer_post = PostSerializer()
+        
+        try:
+            page = pages[page_number]
+            posts = page.posts.all()
+            try:
+                post = posts[post_number]
+            except IndexError as e:
+                content = {'post index': str(e)}
+                return Response(content, status=status.HTTP_404_NOT_FOUND)
+            serializer = PageSerializer(page, many=False)
+            serializer_post = PostSerializer(post, many=False)
+        
+        except IndexError as e:
+            content = {'page index': str(e)}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
+
+        return Response({"result": serializer_post.data})
+        
         
