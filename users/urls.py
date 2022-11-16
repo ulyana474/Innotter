@@ -8,6 +8,7 @@ from . import views
 router = DefaultRouter()
 
 router.register(r'users', UserViewSet)
+router.register(r'tags', TagViewSet)
 
 urlpatterns = [
     path('', include(router.urls))

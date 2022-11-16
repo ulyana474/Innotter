@@ -1,8 +1,10 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-
+from rest_framework.permissions import AllowAny
 from .models import *
 from .serializers import *
 from posts.serializers import *
@@ -17,49 +19,29 @@ class UserViewSet(viewsets.GenericViewSet,
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    @action(methods=['get'], detail=True)
-    def pages(self, request, pk=None):
-        user = User.objects.get(pk=pk)
-        pages = user.pages.all()
-        serializer = PageSerializer(pages, many=True)
+    def get_permissions(self):
+        if self.action == 'delete':
+            return [AllowAny(), ]        
+        return super(UserViewSet, self).get_permissions()
+
+    @action(methods=['get'], detail=False)
+    def get(self, request):
+        required_name = request.GET.get('name','')
+        if(len(required_name) == 0):
+            get_object_or_404(User, pk = 10)
+            return Response({"result" : "enter name"})
+        user = User.objects.filter(username=required_name)
+        serializer = UserSerializer(user, many=True)
         return Response({"result": serializer.data})
 
-    @action(methods=['get'], detail=True)
-    def user_page(self, request, pk=None):
-        try:
-            page_number = int(request.GET['page_number'])
-            post_number = int(request.GET.get('post', '-1'))
-            if(post_number < 0):
-                user = User.objects.get(pk=pk)
-                pages = user.pages.all()
-                try:
-                    page = pages[page_number]
-                except IndexError as e:
-                    content = {'page index': str(e)}
-                    return Response(content, status=status.HTTP_404_NOT_FOUND)
-                serializer = PageSerializer(page, many=False)
-                return Response({"result": serializer.data})
-            post_number = int(request.GET['post'])
-        except ValueError as e:
-            content = {"can't convert to integer": str(e)}
-            return Response(content, status=status.HTTP_404_NOT_FOUND)
 
-        user = User.objects.get(pk=pk)
-        pages = user.pages.all()
-        serializer_post = PostSerializer()
-        
-        try:
-            page = pages[page_number]
-            posts = page.posts.all()
-            try:
-                post = posts[post_number]
-            except IndexError as e:
-                content = {'post index': str(e)}
-                return Response(content, status=status.HTTP_404_NOT_FOUND)
+class TagViewSet(viewsets.GenericViewSet,
+                        mixins.ListModelMixin,
+                        mixins.CreateModelMixin,
+                        mixins.RetrieveModelMixin,
+                        mixins.UpdateModelMixin,
+                        mixins.DestroyModelMixin):
 
-            serializer_post = PostSerializer(post, many=False)
-        except IndexError as e:
-            content = {'page index': str(e)}
-            return Response(content, status=status.HTTP_404_NOT_FOUND)
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
 
-        return Response({"result": serializer_post.data})
