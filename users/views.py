@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAdminUser
 from .models import *
 from .serializers import *
 from posts.serializers import *
@@ -18,11 +18,6 @@ class UserViewSet(viewsets.GenericViewSet,
     
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-    def get_permissions(self):
-        if self.action == 'delete':
-            return [AllowAny(), ]        
-        return super(UserViewSet, self).get_permissions()
 
     @action(methods=['get'], detail=False)
     def get(self, request):
