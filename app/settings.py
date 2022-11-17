@@ -26,6 +26,16 @@ SECRET_KEY = os.getenv('SECRET_KEY', "")
 DEBUG = os.getenv('DEBUG', 0)
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "").split()
 
+CORS_ALLOW_CREDENTIALS = True # to accept cookies via ajax request
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8000' # the domain for front-end app(you can add more than 1)
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.TokenAuthentication',),
+   'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
+}
+
 INSTALLED_APPS = [
     'rest_framework',
     'django.contrib.admin',
@@ -53,6 +63,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+WSGI_APPLICATION = 'app.wsgi.application'
+
 ROOT_URLCONF = 'app.urls'
 
 TEMPLATES = [
@@ -70,8 +82,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'app.wsgi.application'
 
 
 # Database
