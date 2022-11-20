@@ -1,10 +1,11 @@
 import os
 import jwt
 
-from django.core.exceptions import PermissionDenied, ImproperlyConfigured
+from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 
 from rest_framework import status
+from rest_framework.response import Response
 
 from users.models import User
 from users.utils import generate_access_token
@@ -15,7 +16,7 @@ load_dotenv()
 class AuthMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
-        self._exclusion_list = ('/register', '/login')
+        self._exclusion_list = ('/register', '/login/')
 
     def __call__(self, request):
         if request.path not in self._exclusion_list and not request.path.startswith('/admin/'):
@@ -26,11 +27,11 @@ class AuthMiddleware:
                     user_id = decoded.get("user_id")
                     request.user = get_object_or_404(User, id=user_id)
                 else:
-                    raise ImproperlyConfigured(error)
+                    return HttpResponseForbidden("Request doesn't contain Authorization in header")
             except (jwt.ExpiredSignatureError, jwt.DecodeError, jwt.InvalidTokenError):
-                error = {
-                    "error_code": status.HTTP_403_FORBIDDEN,
-                    "error_message": "The token is invalid or expired.",
-                }
-                raise PermissionDenied(error)
+                return HttpResponseForbidden("Signature expired")
+            except (jwt.DecodeError):
+                return HttpResponseForbidden("Decode error")
+            except (jwt.InvalidTokenError):
+                return HttpResponseForbidden("Invalid token")
         return self.get_response(request)
