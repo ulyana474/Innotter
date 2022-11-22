@@ -46,6 +46,35 @@ def login(request):
 
     return response
 
+@api_view(["GET"])
+def followToggle(request, page_id):
+    page_obj = Page.objects.get(pk=page_id)
+    curr_user = get_object_or_404(User, pk=request.user_id)
+    if not curr_user.is_authenticated:
+        return Response({"follow" : "not logged in"})
+    followers = page_obj.followers.all()
+    follow_requests = page_obj.follow_requests.all()
+    if page_obj.is_private:
+        f_requests = list(follow_requests)
+        if curr_user in follow_requests:
+            f_requests.remove(curr_user)
+        else:
+            f_requests.append(curr_user)
+        page_obj.follow_requests.set(f_requests)
+        serializer = PageSerializer(page_obj, many=False)
+        page_obj.save()
+        return Response(serializer.data)
+    else:
+        f = list(followers)
+        if curr_user in followers:
+            f.remove(curr_user)
+        else:
+            f.append(curr_user)
+        page_obj.followers.set(f)
+        serializer = PageSerializer(page_obj, many=False)
+        page_obj.save()
+        return Response(serializer.data)
+
 class UserViewSet(viewsets.GenericViewSet,
                             mixins.ListModelMixin,
                             mixins.CreateModelMixin,
@@ -60,8 +89,7 @@ class UserViewSet(viewsets.GenericViewSet,
     def get(self, request):
         required_name = request.GET.get('name','')
         if(len(required_name) == 0):
-            get_object_or_404(User, pk = 10)
-            return Response({"result" : "enter name"})
+            return Response({"result" : "name is empty"})
         user = User.objects.filter(username=required_name)
         serializer = UserSerializer(user, many=True)
         return Response({"result": serializer.data})

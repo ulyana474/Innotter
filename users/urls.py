@@ -14,4 +14,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('login', login),
     path('register',RegisterUserAPIView.as_view()),
+    path("followToggle/<int:page_id>/", followToggle)
 ]
