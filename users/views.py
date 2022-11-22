@@ -52,28 +52,30 @@ def followToggle(request, page_id):
     curr_user = get_object_or_404(User, pk=request.user_id)
     if not curr_user.is_authenticated:
         return Response({"follow" : "not logged in"})
-    followers = page_obj.followers.all()
-    follow_requests = page_obj.follow_requests.all()
     if page_obj.is_private:
-        f_requests = list(follow_requests)
-        if curr_user in follow_requests:
-            f_requests.remove(curr_user)
+        if page_obj.follow_requests.filter(id=request.user_id).exists():
+            page_obj.follow_requests.remove(request.user_id)
         else:
-            f_requests.append(curr_user)
-        page_obj.follow_requests.set(f_requests)
-        serializer = PageSerializer(page_obj, many=False)
-        page_obj.save()
-        return Response(serializer.data)
+            page_obj.follow_requests.add(request.user_id)
     else:
-        f = list(followers)
-        if curr_user in followers:
-            f.remove(curr_user)
+        if page_obj.followers.filter(id=request.user_id).exists():
+            page_obj.followers.remove(request.user_id)
         else:
-            f.append(curr_user)
-        page_obj.followers.set(f)
-        serializer = PageSerializer(page_obj, many=False)
-        page_obj.save()
-        return Response(serializer.data)
+            page_obj.followers.add(request.user_id)
+    serializer = PageSerializer(page_obj, many=False)
+    page_obj.save()
+    return Response(serializer.data)
+
+@api_view(["GET"])
+def postLike(request, post_id):
+    post_obj = get_object_or_404(Post, pk=post_id)
+    if post_obj.likes.filter(id=request.user_id).exists():
+        post_obj.likes.remove(request.user_id)
+    else:
+        post_obj.likes.add(request.user_id)
+    serializer = PostSerializer(post_obj, many=False)
+    post_obj.save()
+    return Response(serializer.data)
 
 class UserViewSet(viewsets.GenericViewSet,
                             mixins.ListModelMixin,
