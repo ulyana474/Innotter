@@ -1,7 +1,8 @@
 from rest_framework import viewsets, mixins
+from rest_framework.viewsets import GenericViewSet
 from .models import *
 from .serializers import *
-from rest_framework.viewsets import GenericViewSet
+from users.permissions import *
 
 class PageViewSet(viewsets.GenericViewSet,
                             mixins.ListModelMixin,
@@ -9,6 +10,6 @@ class PageViewSet(viewsets.GenericViewSet,
                             mixins.RetrieveModelMixin,
                             mixins.UpdateModelMixin,
                             mixins.DestroyModelMixin):
-    
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Page.objects.all()
     serializer_class = PageSerializer
