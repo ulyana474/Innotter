@@ -16,4 +16,7 @@ urlpatterns = [
     path('register',RegisterUserAPIView.as_view()),
     path("followToggle/<int:page_id>/", followToggle),
     path("postLike/<int:post_id>", postLike),
+    path("followRequests/<int:page_id>", followRequests),
+    path("requestAccept/<int:page_id>/user/<int:user_id>", requestAccept),
+    path("requestAccept/<int:page_id>/user", requestAccept),
 ]
