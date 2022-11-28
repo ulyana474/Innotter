@@ -16,7 +16,7 @@ load_dotenv()
 class AuthMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
-        self._exclusion_list = ('/register', '/login/')
+        self._exclusion_list = ('/register', '/login')
 
     def __call__(self, request):
         if request.path not in self._exclusion_list and not request.path.startswith('/admin/'):
@@ -26,9 +26,10 @@ class AuthMiddleware:
                     decoded = jwt.decode(token, os.getenv('SECRET_KEY', ""), algorithms=['HS256']) 
                     user_id = decoded.get("user_id")
                     request.user = get_object_or_404(User, id=user_id)
+                    request.user_id = user_id
                 else:
                     return HttpResponseForbidden("Request doesn't contain Authorization in header")
-            except (jwt.ExpiredSignatureError, jwt.DecodeError, jwt.InvalidTokenError):
+            except (jwt.ExpiredSignatureError):
                 return HttpResponseForbidden("Signature expired")
             except (jwt.DecodeError):
                 return HttpResponseForbidden("Decode error")

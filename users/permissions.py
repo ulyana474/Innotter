@@ -12,13 +12,17 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
 
+        user = get_object_or_404(User, pk=request.user_id)
+        if user.role == "admin":
+            if request.method == "PATCH":
+                return True
+
         if request.user.is_superuser:
             return True
 
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        user = get_object_or_404(User, pk=request.user_id)
         if obj.owner == user:
             return True
 
@@ -34,13 +38,17 @@ class IsOwnerOrReadOnlyForPost(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
 
+        user = get_object_or_404(User, pk=request.user_id)
+        if user.role == "admin":
+            if request.method == "DELETE":
+                return True
+
         if request.user.is_superuser:
             return True
 
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        user = get_object_or_404(User, pk=request.user_id)
         page = get_object_or_404(Page, owner=request.user_id)
         if obj.page == page:
             return True

@@ -17,6 +17,23 @@ services:
       - .env
     depends_on:
       - db
+      - redis
     links:
       - "db:db"
-
+  redis:
+    image: "redis:alpine"
+  celery:
+    build: .
+    entrypoint: sh ./entrypointCelery.sh
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - redis
+  celery-beat:
+    build: .
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - redis
