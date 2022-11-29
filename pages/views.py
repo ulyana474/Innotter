@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from django.utils import timezone
 from rest_framework import viewsets, mixins
 from rest_framework.decorators import action, parser_classes
 from rest_framework import status
@@ -21,6 +22,11 @@ class PageViewSet(viewsets.GenericViewSet,
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Page.objects.all()
     serializer_class = PageSerializer
+
+    def list(self, request, *args, **kwargs):
+        curr_page = get_object_or_404(Page, pk=request.data)
+        if curr_page.unblock_date is not None:
+            return Response("This page is blocked")
 
     def create(self, request, *args, **kwargs):
         curr_user = get_object_or_404(User, pk=request.user_id)
@@ -66,16 +72,21 @@ class PageViewSet(viewsets.GenericViewSet,
     @action(methods=['PATCH'], detail=True)
     def blockPage(self, request, pk=None):
         user = get_object_or_404(User, pk=request.user_id)
-        if not user.role == User.Roles.ADMIN or User.Roles.MODERATOR:
-            return HttpResponseForbidden("Only admin or moderator can block page")
-        curr_page = get_object_or_404(Page, pk=pk)
-        min = int(request.GET.get('min', '0'))
-        hour = int(request.GET.get('hour', '0'))
-        day = int(request.GET.get('day', '0'))
-        delta = timedelta(days=day, minutes=min, hours=hour)
-        now = datetime.now()
-        block_time = now + delta
-        curr_page.unblock_date = block_time
-        curr_page.save()
-        serializer = PageSerializer(curr_page, many=False)
-        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        if user.role == User.Roles.ADMIN or user.role == User.Roles.MODERATOR:
+            curr_page = get_object_or_404(Page, pk=pk)
+            min = int(request.GET.get('min', '0'))
+            hour = int(request.GET.get('hour', '0'))
+            day = int(request.GET.get('day', '0'))
+            delta = timedelta(days=10000000)#block permanent
+            if min !=0 or hour != 0 or day != 0:
+                delta = timedelta(days=day, minutes=min, hours=hour)
+            now = timezone.now()
+            block_time = now + delta
+            print(type(block_time))
+            curr_page.unblock_date = block_time
+            curr_page.save()
+            print(type(curr_page.unblock_date))
+            serializer = PageSerializer(curr_page, many=False)
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        return HttpResponseForbidden("Only admin or moderator can block page")
+        
