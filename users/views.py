@@ -121,10 +121,10 @@ class UserViewSet(viewsets.GenericViewSet,
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    @action(methods=['get', 'post'], detail=False)
+    @action(methods=['GET', 'POST'], detail=False)
     def get(self, request):
         required_name = request.GET.get('name','')
-        if(len(required_name) == 0):
+        if len(required_name) == 0:
             return Response({"result" : "name is empty"})
         user = User.objects.filter(username=required_name)
         serializer = UserSerializer(user, many=True)

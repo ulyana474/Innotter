@@ -5,10 +5,8 @@ from users.models import User
 class PermissionsForUserDependOnRole(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        
         user = get_object_or_404(User, pk=request.user_id)
-        if user.is_authenticated:
-            return True
+        return user.is_authenticated
 
     def has_object_permission(self, request, view, obj):
 
@@ -23,3 +21,16 @@ class PermissionsForUserDependOnRole(permissions.BasePermission):
             return True
 
         return False
+
+class PermissionsForAdminModerator(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+
+        user = get_object_or_404(User, pk=request.user_id)
+        if not user.is_authenticated:
+            return False
+        return user.role != User.Roles.USER
+
+    def has_object_permission(self, request, view, obj):
+
+        return True
