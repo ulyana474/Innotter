@@ -1,8 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import ensure_csrf_cookie
-from rest_framework import exceptions, generics
-from rest_framework import mixins, status, viewsets
+from rest_framework import exceptions, generics, mixins, status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
