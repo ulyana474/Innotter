@@ -130,6 +130,23 @@ class UserViewSet(viewsets.GenericViewSet,
         serializer = UserSerializer(user, many=True)
         return Response({"result": serializer.data})
 
+    @action(methods=['PATCH'], detail=True)
+    def blockUser(self, request, pk=None):
+        user = get_object_or_404(User, pk=request.user_id)
+        if not user.role == User.Roles.ADMIN:
+            return HttpResponseForbidden("Only admin can block user")
+        curr_page = get_object_or_404(Page, pk=pk)
+        min = int(request.GET.get('min', '0'))
+        hour = int(request.GET.get('hour', '0'))
+        day = int(request.GET.get('day', '0'))
+        delta = timedelta(days=day, minutes=min, hours=hour)
+        now = datetime.now()
+        block_time = now + delta
+        curr_page.unblock_date = block_time
+        curr_page.save()
+        serializer = PageSerializer(curr_page, many=False)
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
 class TagViewSet(viewsets.GenericViewSet,
                         mixins.ListModelMixin,
                         mixins.CreateModelMixin,
