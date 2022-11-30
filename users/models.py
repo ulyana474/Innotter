@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from pages.models import Page
 
 class User(AbstractUser):
     class Roles(models.TextChoices):
@@ -14,3 +15,6 @@ class User(AbstractUser):
     
     title = models.CharField(max_length=80)
     is_blocked = models.BooleanField(default=False)
+
+class Tag(models.Model):
+    name = models.CharField(max_length=30, unique=True)
