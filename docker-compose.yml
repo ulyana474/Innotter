@@ -17,11 +17,14 @@ services:
       - .env
     depends_on:
       - db
-      - redis
+      - rabbitmq
     links:
       - "db:db"
-  redis:
-    image: "redis:alpine"
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: my-rabbit
+    ports:
+      - 5672:5672
   celery:
     build: .
     entrypoint: sh ./entrypointCelery.sh
@@ -29,11 +32,11 @@ services:
       - .:/code
     depends_on:
       - db
-      - redis
+      - rabbitmq
   celery-beat:
     build: .
     volumes:
       - .:/code
     depends_on:
       - db
-      - redis
+      - rabbitmq
