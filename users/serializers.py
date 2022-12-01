@@ -1,8 +1,9 @@
+from django.core.validators import validate_email
+from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 from .models import User, Tag
 from pages.serializers import PageSerializer
-from rest_framework.validators import UniqueValidator
-from django.contrib.auth.password_validation import validate_password
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,10 +28,12 @@ class RegisterSerializer(serializers.ModelSerializer):
       'last_name': {'required': True}
     }
   def validate(self, attrs):
+    super().validate(self, attrs)
     if attrs['password'] != attrs['password2']:
       raise serializers.ValidationError(
         {"password": "Password fields didn't match."})
     return attrs
+    
   def create(self, validated_data):
     user = User.objects.create(
       username=validated_data['username'],
