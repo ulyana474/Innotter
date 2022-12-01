@@ -2,8 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponseForbidden
-from rest_framework import exceptions, generics, permissions
-from rest_framework import mixins, status, viewsets
+from rest_framework import mixins, status, viewsets, exceptions, generics, permissions
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response

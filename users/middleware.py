@@ -17,7 +17,7 @@ class AuthMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
         self._exclusion_list = ('/register', '/login')
-
+        
     def __call__(self, request):
         if request.path not in self._exclusion_list and not request.path.startswith('/admin/'):
             try:
