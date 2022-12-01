@@ -23,19 +23,10 @@ class PageViewSet(viewsets.GenericViewSet,
     queryset = Page.objects.all()
     serializer_class = PageSerializer
 
-    def list(self, request, *args, **kwargs):
-        curr_page = get_object_or_404(Page, pk=request.data)
-        if curr_page.unblock_date is not None:
-            return Response("This page is blocked")
-
     def create(self, request, *args, **kwargs):
         curr_user = get_object_or_404(User, pk=request.user_id)
-        request.data['owner'] = curr_user
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        request.data['owner'] = curr_user.id
+        super().create(request, *args, **kwargs)
 
     @action(methods=['PATCH'], detail=True)
     def tagCreate(self, request, pk=None):
@@ -89,4 +80,3 @@ class PageViewSet(viewsets.GenericViewSet,
             serializer = PageSerializer(curr_page, many=False)
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         return HttpResponseForbidden("Only admin or moderator can block page")
-        

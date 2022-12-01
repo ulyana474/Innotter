@@ -13,7 +13,7 @@ from .models import *
 from .serializers import *
 from posts.serializers import *
 from users.utils import generate_access_token, generate_refresh_token
-from users.permissions import *
+from users.permissionsUser import *
 
 class RegisterUserAPIView(generics.CreateAPIView):
   serializer_class = RegisterSerializer
@@ -118,6 +118,7 @@ class UserViewSet(viewsets.GenericViewSet,
                             mixins.RetrieveModelMixin,
                             mixins.UpdateModelMixin,
                             mixins.DestroyModelMixin):
+    permission_classes = [PermissionsForUserDependOnRole]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -130,26 +131,14 @@ class UserViewSet(viewsets.GenericViewSet,
         serializer = UserSerializer(user, many=True)
         return Response({"result": serializer.data})
 
-    @action(methods=['PATCH'], detail=True)
-    def blockUser(self, request, pk=None):
-        user = get_object_or_404(User, pk=request.user_id)
-        if not user.role == User.Roles.ADMIN:
-            return HttpResponseForbidden("Only admin can block user")
-        curr_page = get_object_or_404(Page, pk=pk)
-        min = int(request.GET.get('min', '0'))
-        hour = int(request.GET.get('hour', '0'))
-        day = int(request.GET.get('day', '0'))
-        delta = timedelta(days=day, minutes=min, hours=hour)
-        now = datetime.now()
-        block_time = now + delta
-        curr_page.unblock_date = block_time
-        curr_page.save()
-        serializer = PageSerializer(curr_page, many=False)
-        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+    def update(self, request, *args, **kwargs):
+        is_blocked = request.data.get('is_blocked', None)
+        if is_blocked == None or len(request.data) > 1:
+            return HttpResponseForbidden("you can change only 'is_blocked' value")
+        return super().update(request, *args, **kwargs)
 
 class TagViewSet(viewsets.GenericViewSet,
                         mixins.ListModelMixin,
-                        mixins.CreateModelMixin,
                         mixins.RetrieveModelMixin,
                         mixins.UpdateModelMixin,
                         mixins.DestroyModelMixin):
