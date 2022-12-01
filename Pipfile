@@ -10,6 +10,9 @@ djangorestframework = "*"
 psycopg2-binary = "*"
 psycopg2 = "*"
 pyjwt = "*"
+celery = "*"
+django-celery-beat = "*"
+redis = "*"
 
 [dev-packages]
 

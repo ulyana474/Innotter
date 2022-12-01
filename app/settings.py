@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from celery.schedules import crontab
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +25,7 @@ load_dotenv()  # loads the configs from .env
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 SECRET_KEY = os.getenv('SECRET_KEY', "")
-DEBUG = os.getenv('DEBUG', 0)
+#DEBUG = os.getenv('DEBUG', 0)
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "").split()
 
 CORS_ALLOW_CREDENTIALS = True # to accept cookies via ajax request
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     'users',
     'pages',
     'posts',
+    'django_celery_beat'
 ]
 
 # Application definition
@@ -124,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Europe/Moscow'
+TIME_ZONE = 'Europe/Warsaw'
 
 USE_I18N = True
 
@@ -142,3 +145,15 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CELERY_BROKER_URL = 'amqp://guest:guest@my-rabbit:5672/'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_BEAT_SCHEDULE = {
+    'add': {
+        'task': 'app.tasks.check_unblock_pages',
+        'schedule': 60,
+    }
+}

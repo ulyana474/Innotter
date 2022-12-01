@@ -17,6 +17,26 @@ services:
       - .env
     depends_on:
       - db
+      - rabbitmq
     links:
       - "db:db"
-
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: my-rabbit
+    ports:
+      - 5672:5672
+  celery:
+    build: .
+    entrypoint: sh ./entrypointCelery.sh
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - rabbitmq
+  celery-beat:
+    build: .
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - rabbitmq
