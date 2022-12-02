@@ -53,7 +53,6 @@ def followToggle(request, page_id):
     curr_user = get_object_or_404(User, pk=request.user_id)
     if not curr_user.is_authenticated:
         return HttpResponseForbidden("not logged in")
-    print(page_obj.owner)
     if page_obj.owner == curr_user:
         return HttpResponseForbidden("can't subscribe to your own page")
     else:
@@ -131,9 +130,11 @@ class UserViewSet(viewsets.GenericViewSet,
         return Response({"result": serializer.data})
 
     def update(self, request, *args, **kwargs):
-        is_blocked = request.data.get('is_blocked', None)
-        if is_blocked == None or len(request.data) > 1:
-            return HttpResponseForbidden("you can change only 'is_blocked' value")
+        user = get_object_or_404(User, pk=request.user_id)
+        if user.role == User.Roles.ADMIN:
+            is_blocked = request.data.get('is_blocked', None)
+            if is_blocked == None or len(request.data) > 1:
+                return HttpResponseForbidden("you can change only 'is_blocked' value")
         return super().update(request, *args, **kwargs)
 
 class TagViewSet(viewsets.GenericViewSet,

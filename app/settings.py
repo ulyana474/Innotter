@@ -152,8 +152,19 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
 CELERY_BEAT_SCHEDULE = {
-    'add': {
+    'unblock_pages': {
         'task': 'app.tasks.check_unblock_pages',
-        'schedule': 60,
+        'schedule': 5,
+    },
+    'block_page': {
+        'task': 'app.tasks.block_page_automatically',
+        'schedule': 10,
     }
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = 'ulyana.drozdova@innowise-group.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = 'qzuw ogdj btse dlfh'
+EMAIL_USE_TLS = True
