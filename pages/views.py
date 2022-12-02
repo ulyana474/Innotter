@@ -73,10 +73,8 @@ class PageViewSet(viewsets.GenericViewSet,
                 delta = timedelta(days=day, minutes=min, hours=hour)
             now = timezone.now()
             block_time = now + delta
-            print(type(block_time))
             curr_page.unblock_date = block_time
             curr_page.save()
-            print(type(curr_page.unblock_date))
             serializer = PageSerializer(curr_page, many=False)
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         return HttpResponseForbidden("Only admin or moderator can block page")
