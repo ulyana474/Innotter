@@ -23,6 +23,9 @@ class PageViewSet(viewsets.GenericViewSet,
     serializer_class = PageSerializer
     user=None#for using in list() to pass to get_queryset()
 
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'uuid', 'tags__name']
+
     def list(self, request, *args, **kwargs):
         #pass user from request to get_queryset()
         self.user = get_object_or_404(User, pk=request.user_id)

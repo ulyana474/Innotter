@@ -1,8 +1,10 @@
+import os
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.http import HttpResponseForbidden
-from rest_framework import mixins, status, viewsets, exceptions, generics, permissions
+from django.http import HttpResponseForbidden, HttpResponseRedirect
+from rest_framework import mixins, status, viewsets, exceptions, generics, permissions, filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
@@ -110,6 +112,14 @@ def requestAccept(request, page_id, user_id=-1):
     serializer = PageSerializer(page_obj, many=False)
     return Response(serializer.data)
 
+@api_view(["GET"])
+def search(request):
+    findBy = request.GET.get('findBy', '')
+    search = request.GET.get('search', '')
+    if findBy == 'page':
+        return HttpResponseRedirect(f"http://127.0.0.1:8000/pages?search={search}")
+    return HttpResponseRedirect(f"http://127.0.0.1:8000/users?search={search}")
+
 class UserViewSet(viewsets.GenericViewSet,
                             mixins.ListModelMixin,
                             mixins.CreateModelMixin,
@@ -120,23 +130,25 @@ class UserViewSet(viewsets.GenericViewSet,
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    @action(methods=['GET', 'POST'], detail=False)
-    def get(self, request):
-        required_name = request.GET.get('name','')
-        if len(required_name) == 0:
-            return Response({"result" : "name is empty"})
-        user = User.objects.filter(username=required_name)
-        serializer = UserSerializer(user, many=True)
-        return Response({"result": serializer.data})
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['username']
 
     def update(self, request, *args, **kwargs):
         user = get_object_or_404(User, pk=request.user_id)
         if user.role == User.Roles.ADMIN:
             is_blocked = request.data.get('is_blocked', None)
-            if is_blocked == None or len(request.data) > 1:
-                return HttpResponseForbidden("you can change only 'is_blocked' value")
+            if not user.id == request.user_id:
+                if is_blocked == None or len(request.data) > 1:
+                    return HttpResponseForbidden("you can change only 'is_blocked' value")
+        #check img extension
+        img_path = request.data.get('image_s3_path', None)
+        if img_path is not None:
+            filename, file_extension = os.path.splitext(img_path)
+            print(file_extension)
+            if file_extension != '.jpg' and file_extension != '.png':
+                return HttpResponseForbidden("you can download photo with '.jpg' or '.png' extension")     
         return super().update(request, *args, **kwargs)
-
+        
 class TagViewSet(viewsets.GenericViewSet,
                         mixins.ListModelMixin,
                         mixins.RetrieveModelMixin,

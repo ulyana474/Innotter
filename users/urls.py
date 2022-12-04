@@ -11,6 +11,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('login', login),
     path('register',RegisterUserAPIView.as_view()),
+    path('search', search),
     path("followToggle/<int:page_id>/", followToggle),
     path("postLike/<int:post_id>", postLike),
     path("followRequests/<int:page_id>", followRequests),
