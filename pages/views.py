@@ -1,10 +1,9 @@
 from datetime import datetime, timedelta
-from django.utils import timezone
-from rest_framework import viewsets, mixins
-from rest_framework.decorators import action, parser_classes
-from rest_framework import status
-from rest_framework.response import Response
 from django.http import HttpResponseForbidden
+from django.utils import timezone
+from rest_framework import viewsets, mixins, filters, status
+from rest_framework.decorators import action, parser_classes
+from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from .models import *
 from .serializers import *
@@ -22,6 +21,18 @@ class PageViewSet(viewsets.GenericViewSet,
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Page.objects.all()
     serializer_class = PageSerializer
+    user=None#for using in list() to pass to get_queryset()
+
+    def list(self, request, *args, **kwargs):
+        #pass user from request to get_queryset()
+        self.user = get_object_or_404(User, pk=request.user_id)
+        return super().list(request, *args, **kwargs)
+
+    def get_queryset(self):
+        if self.user != None:
+            if not self.user.role == User.Roles.ADMIN:
+                return self.queryset.filter(is_private=False)
+        return self.queryset
 
     def create(self, request, *args, **kwargs):
         curr_user = get_object_or_404(User, pk=request.user_id)
