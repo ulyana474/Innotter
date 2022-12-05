@@ -120,6 +120,19 @@ def search(request):
         return HttpResponseRedirect(f"http://127.0.0.1:8000/pages?search={search}")
     return HttpResponseRedirect(f"http://127.0.0.1:8000/users?search={search}")
 
+@api_view(["GET"])
+def news(request):
+    user = get_object_or_404(User, pk=request.user_id)
+    posts = Post.objects.order_by('updated_at').reverse()
+    posts_to_show =  list()
+    for post in posts:
+        if post.page.owner == user:
+            posts_to_show.append(post)
+        elif user in post.page.followers.all():
+            posts_to_show.append(post)
+    serializer = PostSerializer(posts_to_show, many=True)
+    return Response(serializer.data)
+
 class UserViewSet(viewsets.GenericViewSet,
                             mixins.ListModelMixin,
                             mixins.CreateModelMixin,
