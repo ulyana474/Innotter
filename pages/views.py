@@ -45,6 +45,17 @@ class PageViewSet(viewsets.GenericViewSet,
         publish({**response.data, PageMessageAction.NAME.value: PageMessageAction.CREATE.value})
         return response
 
+    def update(self, request, *args, **kwargs):
+        response = super().update(request, *args, **kwargs)
+        publish({**response.data, PageMessageAction.NAME.value: PageMessageAction.UPDATE.value})
+        return response
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = PageSerializer(instance)
+        publish({**serializer.data, PageMessageAction.NAME.value: PageMessageAction.DELETE.value})
+        return super().destroy(request, *args, **kwargs)
+
     @action(methods=['PATCH'], detail=True)
     def tagCreate(self, request, pk=None):
         curr_page = get_object_or_404(Page, pk=pk)

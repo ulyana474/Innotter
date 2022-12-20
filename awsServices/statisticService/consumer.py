@@ -17,9 +17,15 @@ def on_message(chan, method_frame, header_frame, body, userdata=None):
     dict = json.loads(body.decode()) 
     LOGGER.info('Delivery properties: %s, message metadata: %s', method_frame, header_frame)
     LOGGER.info('Userdata: %s, message body: %s', userdata, dict)
-    if dict.get(PageMessageAction.NAME.value, '') == PageMessageAction.CREATE.value:
+    action = dict.get(PageMessageAction.NAME.value, '')
+    if action != '':
         dict.pop(PageMessageAction.NAME.value)
+    if action == PageMessageAction.CREATE.value:
         put_item(json.dumps(dict))
+    elif action == PageMessageAction.UPDATE.value:
+        update_item(json.dumps(dict))
+    elif action == PageMessageAction.DELETE.value:
+        delete_item(json.dumps(dict))
 
 def main():
     """Main method."""
