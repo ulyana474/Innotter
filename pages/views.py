@@ -7,10 +7,12 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from .models import *
 from .serializers import *
+from awsServices.statisticService.enums import PageMessageAction
 from users.permissions import *
 from users.permissionsUser import *
 from users.models import Tag
 from users.serializers import TagSerializer
+from pages.producer import publish
 
 class PageViewSet(viewsets.GenericViewSet,
                             mixins.ListModelMixin,
@@ -27,7 +29,6 @@ class PageViewSet(viewsets.GenericViewSet,
     search_fields = ['name', 'uuid', 'tags__name']
 
     def list(self, request, *args, **kwargs):
-        #pass user from request to get_queryset()
         self.user = get_object_or_404(User, pk=request.user_id)
         return super().list(request, *args, **kwargs)
 
@@ -40,7 +41,9 @@ class PageViewSet(viewsets.GenericViewSet,
     def create(self, request, *args, **kwargs):
         curr_user = get_object_or_404(User, pk=request.user_id)
         request.data['owner'] = curr_user.id
-        super().create(request, *args, **kwargs)
+        response = super().create(request, *args, **kwargs)
+        publish({**response.data, PageMessageAction.NAME.value: PageMessageAction.CREATE.value})
+        return response
 
     @action(methods=['PATCH'], detail=True)
     def tagCreate(self, request, pk=None):

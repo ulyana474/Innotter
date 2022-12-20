@@ -13,6 +13,13 @@ pyjwt = "*"
 celery = "*"
 django-celery-beat = "*"
 redis = "*"
+pydantic = "*"
+fastapi = "*"
+localstack = "*"
+aio-pika = "*"
+uvicorn = "*"
+logger = "*"
+pika = "*"
 
 [dev-packages]
 

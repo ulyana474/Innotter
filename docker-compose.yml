@@ -17,14 +17,55 @@ services:
       - .env
     depends_on:
       - db
-      - rabbitmq
+      - fastapi
     links:
       - "db:db"
+  consumer:
+    build: ./awsServices
+    entrypoint: sh ./entrypointConsumer.sh
+    env_file:
+      - .env
+    depends_on:
+      - fastapi
+  fastapi:
+    build: ./awsServices
+    entrypoint: sh ./entrypointFastApi.sh
+    container_name: fastapi-container
+    image: fastapi
+    ports:
+      - 80:80
+    env_file:
+      - ./.env
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+    depends_on:
+      localstack:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+  localstack:
+    container_name: localstack
+    image: localstack/localstack
+    hostname: localhost.localstack.cloud
+    ports:
+      - "4566:4566"
+    tty: true 
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
   rabbitmq:
-    image: rabbitmq:3-management
+    build: rabbitmq/.
     hostname: my-rabbit
     ports:
       - 5672:5672
+      - 15672:15672
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
   celery:
     build: .
     entrypoint: sh ./entrypointCelery.sh
@@ -33,6 +74,7 @@ services:
     depends_on:
       - db
       - rabbitmq
+      - fastapi
   celery-beat:
     build: .
     volumes:
@@ -40,3 +82,4 @@ services:
     depends_on:
       - db
       - rabbitmq
+      - fastapi
