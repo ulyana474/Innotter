@@ -1,18 +1,19 @@
+from awsServices.statisticService.enums import PageMessageAction
 from datetime import datetime, timedelta
 from django.http import HttpResponseForbidden
 from django.utils import timezone
+from .models import *
+from pages.producer import publish
 from rest_framework import viewsets, mixins, filters, status
 from rest_framework.decorators import action, parser_classes
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-from .models import *
 from .serializers import *
-from awsServices.statisticService.enums import PageMessageAction
 from users.permissions import *
 from users.permissionsUser import *
 from users.models import Tag
 from users.serializers import TagSerializer
-from pages.producer import publish
+
 
 class PageViewSet(viewsets.GenericViewSet,
                             mixins.ListModelMixin,
@@ -42,12 +43,15 @@ class PageViewSet(viewsets.GenericViewSet,
         curr_user = get_object_or_404(User, pk=request.user_id)
         request.data['owner'] = curr_user.id
         response = super().create(request, *args, **kwargs)
-        publish({**response.data, PageMessageAction.NAME.value: PageMessageAction.CREATE.value})
+        page_id = response.data.get("id")
+        publish({PageMessageAction.KEY_PAGE_ID.value: page_id, PageMessageAction.NAME.value: PageMessageAction.CREATE.value})
+        print("PUBLISHED")
         return response
 
     def update(self, request, *args, **kwargs):
         response = super().update(request, *args, **kwargs)
-        publish({**response.data, PageMessageAction.NAME.value: PageMessageAction.UPDATE.value})
+        page_id = response.data.get("id")
+        publish({PageMessageAction.KEY_PAGE_ID.value: page_id, PageMessageAction.NAME.value: PageMessageAction.UPDATE.value})
         return response
 
     def destroy(self, request, *args, **kwargs):

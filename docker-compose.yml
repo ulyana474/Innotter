@@ -3,6 +3,7 @@ services:
     image: postgres
     volumes:
       - ./data/db:/var/lib/postgresql/data
+      - "/etc/localtime:/etc/localtime:ro"
     env_file:
       - .env
     ports:
@@ -11,6 +12,7 @@ services:
     build: .
     volumes:
       - .:/code
+      - "/etc/localtime:/etc/localtime:ro"
     ports:
       - "8000:8000"
     env_file:
@@ -27,6 +29,9 @@ services:
       - .env
     depends_on:
       - fastapi
+      - localstack
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
   fastapi:
     build: ./awsServices
     entrypoint: sh ./entrypointFastApi.sh
@@ -44,17 +49,21 @@ services:
       rabbitmq:
         condition: service_healthy
   localstack:
-    container_name: localstack
+    container_name: localstack_main
     image: localstack/localstack
     hostname: localhost.localstack.cloud
     ports:
-      - "4566:4566"
-    tty: true 
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+    environment:
+      - TZ=America/Los_Angeles
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    command: echo 'PST' >> /etc/timezone
     volumes:
+      - "/etc/localtime:/etc/localtime:ro"
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "/etc/timezone:/etc/timezone:ro"
-      - "/etc/localtime:/etc/localtime:ro"
   rabbitmq:
     build: rabbitmq/.
     hostname: my-rabbit
@@ -66,11 +75,14 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
   celery:
     build: .
     entrypoint: sh ./entrypointCelery.sh
     volumes:
       - .:/code
+      - "/etc/localtime:/etc/localtime:ro"
     depends_on:
       - db
       - rabbitmq
@@ -79,6 +91,7 @@ services:
     build: .
     volumes:
       - .:/code
+      - "/etc/localtime:/etc/localtime:ro"
     depends_on:
       - db
       - rabbitmq
