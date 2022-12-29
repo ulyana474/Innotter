@@ -12,6 +12,7 @@ urlpatterns = [
     path('login', login),
     path('register',RegisterUserAPIView.as_view()),
     path('search', search),
+    path('news', news),
     path("followToggle/<int:page_id>/", followToggle),
     path("postLike/<int:post_id>", postLike),
     path("followRequests/<int:page_id>", followRequests),

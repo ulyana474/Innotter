@@ -1,23 +1,35 @@
 import os
+from awsServices.s3Service.s3Manager import S3FileManager, S3Enums
+from awsServices.statisticService.enums import PageMessageAction
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponseForbidden, HttpResponseRedirect
+import json
+import logging
+from .models import *
+from pages.producer import publish
+from posts.serializers import *
+import requests
 from rest_framework import mixins, status, viewsets, exceptions, generics, permissions, filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
-from .models import *
 from .serializers import *
-from posts.serializers import *
 from users.utils import generate_access_token, generate_refresh_token
 from users.permissionsUser import *
 
+LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
+              '-35s %(lineno) -5d: %(message)s')
+logger = logging.getLogger(__name__)
+
+logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
+
 class RegisterUserAPIView(generics.CreateAPIView):
-  serializer_class = RegisterSerializer
+    serializer_class = RegisterSerializer
 
 @api_view(["POST"])
 @ensure_csrf_cookie
@@ -61,13 +73,29 @@ def followToggle(request, page_id):
         if page_obj.is_private:
             if page_obj.follow_requests.filter(id=request.user_id).exists():
                 page_obj.follow_requests.remove(request.user_id)
+                publish({PageMessageAction.KEY_PAGE_ID.value: page_id,
+                         PageMessageAction.FIELD.value: "followers",
+                         PageMessageAction.INCREASE.value: False,
+                         PageMessageAction.NAME.value: PageMessageAction.UPDATE.value})
             else:
                 page_obj.follow_requests.add(request.user_id)
+                publish({PageMessageAction.KEY_PAGE_ID.value: page_id,
+                         PageMessageAction.FIELD.value: "followers",
+                         PageMessageAction.INCREASE.value: True,
+                         PageMessageAction.NAME.value: PageMessageAction.UPDATE.value})
         else:
             if page_obj.followers.filter(id=request.user_id).exists():
                 page_obj.followers.remove(request.user_id)
+                publish({PageMessageAction.KEY_PAGE_ID.value: page_id,
+                         PageMessageAction.FIELD.value: "followers",
+                         PageMessageAction.INCREASE.value: False,
+                         PageMessageAction.NAME.value: PageMessageAction.UPDATE.value})
             else:
                 page_obj.followers.add(request.user_id)
+                publish({PageMessageAction.KEY_PAGE_ID.value: page_id,
+                         PageMessageAction.FIELD.value: "followers",
+                         PageMessageAction.INCREASE.value: True,
+                         PageMessageAction.NAME.value: PageMessageAction.UPDATE.value})
         serializer = PageSerializer(page_obj, many=False)
         page_obj.save()
         return Response(serializer.data)
@@ -84,10 +112,19 @@ def followRequests(request, page_id):
 @api_view(["GET"])
 def postLike(request, post_id):
     post_obj = get_object_or_404(Post, pk=post_id)
+    page = post_obj.page
     if post_obj.likes.filter(id=request.user_id).exists():
         post_obj.likes.remove(request.user_id)
+        publish({PageMessageAction.KEY_PAGE_ID.value: page.id,
+                 PageMessageAction.FIELD.value: "likes",
+                 PageMessageAction.INCREASE.value: False,
+                 PageMessageAction.NAME.value: PageMessageAction.UPDATE.value})
     else:
         post_obj.likes.add(request.user_id)
+        publish({PageMessageAction.KEY_PAGE_ID.value: page.id,
+                 PageMessageAction.FIELD.value: "likes",
+                 PageMessageAction.INCREASE.value: True,
+                 PageMessageAction.NAME.value: PageMessageAction.UPDATE.value})
     post_obj.save()
     serializer = PostSerializer(post_obj, many=False)
     return Response(serializer.data)
@@ -159,8 +196,19 @@ class UserViewSet(viewsets.GenericViewSet,
             filename, file_extension = os.path.splitext(img_path)
             print(file_extension)
             if file_extension != '.jpg' and file_extension != '.png':
-                return HttpResponseForbidden("you can download photo with '.jpg' or '.png' extension")     
-        return super().update(request, *args, **kwargs)
+                return HttpResponseForbidden("you can download photo with '.jpg' or '.png' extension") 
+            manager = S3FileManager()
+            username = user.username
+            obj_name = username + file_extension
+            s3_path = f"S3://{S3Enums.BUCKET_NAME.value}/{obj_name}"
+            resp_dict = manager.create_presigned_post(S3Enums.BUCKET_NAME.value, obj_name)
+            if resp_dict is None:
+                logger.info("response is None")
+                exit(1)    
+            request.data["image_s3_path"] = s3_path
+            response = super().update(request, *args, **kwargs)
+            response.data["presigned_url"] = resp_dict
+        return response
         
 class TagViewSet(viewsets.GenericViewSet,
                         mixins.ListModelMixin,
