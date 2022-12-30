@@ -1,8 +1,8 @@
-from controllers import create_table, put_item, update_item
-from enums import PageMessageAction
 import json
 import logging
 import pika
+from controllers import create_table, put_item, update_item
+from enums import PageMessageAction
 from pika.exchange_type import ExchangeType
 
 

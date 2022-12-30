@@ -1,7 +1,7 @@
-from decimal import Decimal
-from fastapi import FastAPI, Request, HTTPException
 import json
 import logging
+from decimal import Decimal
+from fastapi import FastAPI, Request, HTTPException
 from statisticService.controllers import get_statistics
 
 

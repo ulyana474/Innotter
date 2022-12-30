@@ -1,11 +1,11 @@
 import boto3
-from botocore.exceptions import ClientError
-from enum import Enum
 import logging
 import os
 import requests
 import sys
 import threading
+from botocore.exceptions import ClientError
+from enum import Enum
 
 
 LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
@@ -13,6 +13,14 @@ LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
 logger = logging.getLogger(__name__)
 
 logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
+
+
+credentials = {
+    "ENDPOINT_URL": os.environ.get("ENDPOINT_URL", ""),
+    "AWS_ACCESS_KEY_ID": os.environ.get("AWS_ACCESS_KEY_ID", ""),
+    "AWS_DEFAULT_REGION": os.environ.get("AWS_DEFAULT_REGION", ""),
+    "AWS_SECRET_ACCESS_KEY": os.environ.get("AWS_SECRET_ACCESS_KEY", ""),
+}
 
 
 class ProgressPercentage(object):
@@ -44,12 +52,12 @@ class S3Enums(Enum):
 class S3FileManager():
 
     def __init__(self):
-        self.client = boto3.client('s3', endpoint_url="http://localhost.localstack.cloud:4566", region_name="us-west-1")
+        self.client = boto3.client('s3', endpoint_url=credentials.get("ENDPOINT_URL"), region_name=credentials.get("AWS_DEFAULT_REGION"))
         if not S3FileManager.get_bucket(self.client):
             S3FileManager.create_bucket(self.client, S3Enums.BUCKET_NAME.value)
 
     @staticmethod
-    def create_bucket(client, bucket_name, region="us-west-1"):
+    def create_bucket(client, bucket_name, region=credentials.get("AWS_DEFAULT_REGION")):
         try:
             if region is None:
                 client.create_bucket(Bucket=bucket_name)
