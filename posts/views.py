@@ -1,5 +1,3 @@
-from app.settings import EMAIL_HOST_USER
-from app.tasks import send_mail_task
 from awsServices.sesService.sesEmailManager import SesEmailManager
 from awsServices.statisticService.enums import PageMessageAction
 from django.conf import settings

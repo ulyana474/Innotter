@@ -1,9 +1,7 @@
 import boto3
 import logging
 import os
-from app.settings import *
 from botocore.exceptions import ClientError
-# from ses.client.exceptions import TemplateDoesNotExist
 
 
 LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
@@ -18,6 +16,7 @@ credentials = {
     "AWS_ACCESS_KEY_ID": os.environ.get("AWS_ACCESS_KEY_ID", ""),
     "AWS_DEFAULT_REGION": os.environ.get("AWS_DEFAULT_REGION", ""),
     "AWS_SECRET_ACCESS_KEY": os.environ.get("AWS_SECRET_ACCESS_KEY", ""),
+    "SMTP_HOST": os.environ.get("SMTP_HOST", "")
 }
 
 
@@ -51,7 +50,7 @@ class SesEmailManager():
     @staticmethod
     def verify_email(self):
         email = self.client.verify_email_identity(
-            EmailAddress=EMAIL_HOST_USER,
+            EmailAddress=credentials.get("SMTP_HOST"),
             )
         return email
 
@@ -60,7 +59,7 @@ class SesEmailManager():
         try:
             self.verify_email(self)
             response = self.client.send_templated_email(
-                Source=SMTP_USER,
+                Source=credentials.get("SMTP_HOST"),
                 Destination={
                     'ToAddresses': email_list,
                 },
