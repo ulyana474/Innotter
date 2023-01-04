@@ -60,9 +60,6 @@ services:
       - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
       - DATA_DIR=$HOME/s3
-      - SMTP_HOST=$SMTP_HOST
-      - SMTP_PASS=$SMTP_PASS
-      - SMTP_USER=$SMTP_USER
     command: echo 'PST' >> /etc/timezone
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
@@ -101,4 +98,3 @@ services:
       - db
       - rabbitmq
       - fastapi
-    

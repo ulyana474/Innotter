@@ -159,3 +159,10 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': 10,
     }
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = 'ulyana.drozdova@innowise-group.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = 'qzuw ogdj btse dlfh'
+EMAIL_USE_TLS = True
