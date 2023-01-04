@@ -1,5 +1,6 @@
 from app.settings import EMAIL_HOST_USER
 from app.tasks import send_mail_task
+from awsServices.sesService.sesEmailManager import SesEmailManager
 from awsServices.statisticService.enums import PageMessageAction
 from django.conf import settings
 from django.http import HttpResponseForbidden
@@ -35,7 +36,9 @@ class PostViewSet(viewsets.GenericViewSet,
             emails = list()
             for user in followers:
                 emails.append(user.email)
-            send_mail_task.delay(content, settings.EMAIL_HOST_USER, emails)
+            manager = SesEmailManager()
+            manager.get_template(template_name='ses_template')
+            manager.send_mail(email_list=emails)
         response = super().create(request, *args, **kwargs)
         publish({PageMessageAction.KEY_PAGE_ID.value: page_id,
                  PageMessageAction.FIELD.value: "posts",
