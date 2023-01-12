@@ -154,8 +154,8 @@ def search(request):
     findBy = request.GET.get('findBy', '')
     search = request.GET.get('search', '')
     if findBy == 'page':
-        return HttpResponseRedirect(f"http://127.0.0.1:8000/pages?search={search}")
-    return HttpResponseRedirect(f"http://127.0.0.1:8000/users?search={search}")
+        return HttpResponseRedirect(f"http://127.0.0.1:8000/pages/?search={search}")
+    return HttpResponseRedirect(f"http://127.0.0.1:8000/users/?search={search}")
 
 @api_view(["GET"])
 def news(request):
@@ -185,11 +185,7 @@ class UserViewSet(viewsets.GenericViewSet,
 
     def update(self, request, *args, **kwargs):
         user = get_object_or_404(User, pk=request.user_id)
-        if user.role == User.Roles.ADMIN:
-            is_blocked = request.data.get('is_blocked', None)
-            if not user.id == request.user_id:
-                if is_blocked == None or len(request.data) > 1:
-                    return HttpResponseForbidden("you can change only 'is_blocked' value")
+        is_blocked = request.data.get('is_blocked', None)
         #check img extension
         img_path = request.data.get('image_s3_path', None)
         if img_path is not None:
@@ -208,6 +204,7 @@ class UserViewSet(viewsets.GenericViewSet,
             request.data["image_s3_path"] = s3_path
             response = super().update(request, *args, **kwargs)
             response.data["presigned_url"] = resp_dict
+        response = super().update(request, *args, **kwargs)
         return response
         
 class TagViewSet(viewsets.GenericViewSet,

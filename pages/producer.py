@@ -7,8 +7,11 @@ connection = None
 
 def publish(message : dict):
     credentials = pika.PlainCredentials('guest', 'guest')
-    parameters = pika.ConnectionParameters('my-rabbit',
-                                        5672,
+    HOST = "localhost"
+    if os.getenv("TEST", 0) == 0:
+        HOST = os.getenv('RABBIT_MQ_HOST', "localhost")
+    parameters = pika.ConnectionParameters(HOST,
+                                        os.environ.get('RABBIT_MQ_PORT', ''),
                                         '/',
                                         credentials)
     connection = pika.BlockingConnection(parameters)

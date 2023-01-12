@@ -10,7 +10,10 @@ class PermissionsForUserDependOnRole(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj, pk=None):
         user = get_object_or_404(User, pk=request.user_id)
-        if user.role == "admin" or obj == user:
+        if user.role == "admin" and request.data.get("is_blocked") is not None:
+            return True
+
+        if obj == user:
             if request.method == "PATCH":
                 return True
 
