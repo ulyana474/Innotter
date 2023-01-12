@@ -17,11 +17,6 @@ def check_unblock_pages():
                 page.save()
 
 @shared_task
-def send_mail_task(message, email_from, recepient_list):
-    if len(recepient_list) > 0:
-        send_mail("Innotter:new post", message, email_from, recepient_list)
-
-@shared_task
 def block_page_automatically(days_to_block=1000):
     users_blocked = User.objects.filter(is_blocked=True)
     now = timezone.now()
