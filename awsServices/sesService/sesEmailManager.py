@@ -16,7 +16,7 @@ credentials = {
     "AWS_ACCESS_KEY_ID": os.environ.get("AWS_ACCESS_KEY_ID", ""),
     "AWS_DEFAULT_REGION": os.environ.get("AWS_DEFAULT_REGION", ""),
     "AWS_SECRET_ACCESS_KEY": os.environ.get("AWS_SECRET_ACCESS_KEY", ""),
-    "SMTP_HOST": os.environ.get("SMTP_HOST", "")
+    "SMPT_USER": os.environ.get("SMTP_USER", "")
 }
 
 
@@ -25,10 +25,11 @@ class SesEmailManager():
     def __init__(self):
         self.client = boto3.client('ses', endpoint_url=credentials.get("ENDPOINT_URL"), region_name=credentials.get("AWS_DEFAULT_REGION"))
 
+
     @staticmethod
-    def create_template(self, template_name, subject_part, text_part):
+    def create_template(client, template_name, subject_part, text_part):
         try:
-            response = self.client.create_template(
+            response = client.create_template(
             Template = {
                 'TemplateName' : template_name,
                 'SubjectPart'  : subject_part,
@@ -44,22 +45,23 @@ class SesEmailManager():
         try:
             response = self.client.get_template(TemplateName = template_name)
         except self.client.exceptions.TemplateDoesNotExistException:
-            response = self.create_template(self, template_name='ses_template', subject_part='Innotter', text_part='New post')
+            response = self.create_template(self.client, template_name='ses_template', subject_part='Innotter', text_part='New post')
         return response
 
+
     @staticmethod
-    def verify_email(self):
-        email = self.client.verify_email_identity(
-            EmailAddress=credentials.get("SMTP_HOST"),
+    def verify_email(client):
+        email = client.verify_email_identity(
+            EmailAddress=credentials.get("SMPT_USER"),
             )
         return email
 
 
     def send_mail(self, email_list):
         try:
-            self.verify_email(self)
+            SesEmailManager.verify_email(self.client)
             response = self.client.send_templated_email(
-                Source=credentials.get("SMTP_HOST"),
+                Source=credentials.get("SMPT_USER"),
                 Destination={
                     'ToAddresses': email_list,
                 },
@@ -70,6 +72,5 @@ class SesEmailManager():
             logger.exception(
                 "Couldn't send email")
             raise
-        print(response)
         return response
     

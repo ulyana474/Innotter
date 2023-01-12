@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'users',
     'pages',
     'posts',
-    'django_celery_beat'
+    'django_celery_beat',
+    'rest_framework.authtoken',
 ]
 
 # Application definition
@@ -89,13 +90,17 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+DB = "localhost"
+if os.getenv("TEST", 0) == 0:
+    DB = os.getenv('HOST', "localhost")
+
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('ENGINE', "django.db.backends.sqlite3"),
         'NAME': os.environ.get('POSTGRES_NAME', ""),
         'USER': os.environ.get('POSTGRES_USER', ""),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ""),
-        'HOST' : os.getenv('HOST', "localhost"),
+        'HOST' : DB,
         'PORT' : os.getenv('PORT', 8000)
     }
 }

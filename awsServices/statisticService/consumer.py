@@ -1,10 +1,10 @@
 import json
 import logging
+import os
 import pika
 from controllers import create_table, put_item, update_item
 from enums import PageMessageAction
 from pika.exchange_type import ExchangeType
-
 
 LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
               '-35s %(lineno) -5d: %(message)s')
@@ -33,8 +33,11 @@ def on_message(chan, method_frame, header_frame, body, userdata=None):
 def main():
     """Main method."""
     credentials = pika.PlainCredentials('guest', 'guest')
-    parameters = pika.ConnectionParameters('my-rabbit',
-                                    5672,
+    HOST = "localhost"
+    if os.getenv("TEST", 0) == 0:
+        HOST = os.getenv('RABBIT_MQ_HOST', "localhost")
+    parameters = pika.ConnectionParameters(HOST,
+                                    os.environ.get('RABBIT_MQ_PORT', ''),
                                     '/',
                                     credentials,
                                     heartbeat=0)#TODO use keep alive

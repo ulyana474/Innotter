@@ -73,7 +73,6 @@ class PageViewSet(viewsets.GenericViewSet,
             new_tag = Tag()
             new_tag.name = tag_name
             new_tag.save()
-            Tag.objects.add(new_tag)
             curr_page.tags.add(new_tag)
         curr_page.save()
         serializer = PageSerializer(curr_page, many=False)
@@ -92,7 +91,7 @@ class PageViewSet(viewsets.GenericViewSet,
         serializer = PageSerializer(curr_page, many=False)
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
-    @action(methods=['PATCH'], detail=True)
+    @action(methods=['GET'], detail=True)
     def blockPage(self, request, pk=None):
         user = get_object_or_404(User, pk=request.user_id)
         if user.role == User.Roles.ADMIN or user.role == User.Roles.MODERATOR:

@@ -9,8 +9,8 @@ router.register(r'tags', TagViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('login', login),
-    path('register',RegisterUserAPIView.as_view()),
+    path('login', login, name='login'),
+    path('register', RegisterUserAPIView.as_view(), name='register'),
     path('search', search),
     path('news', news),
     path("followToggle/<int:page_id>/", followToggle),
