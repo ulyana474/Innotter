@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres
+    image: innotter:postgres
     volumes:
       - ./data/db:/var/lib/postgresql/data
       - "/etc/localtime:/etc/localtime:ro"
@@ -9,7 +9,7 @@ services:
     ports:
       - "5432:5432"
   web:
-    build: .
+    image: innotter:innotter-web
     volumes:
       - .:/code
       - "/etc/localtime:/etc/localtime:ro"
@@ -23,7 +23,7 @@ services:
     links:
       - "db:db"
   consumer:
-    build: ./awsServices
+    image: innotter:innotter-consumer
     entrypoint: sh ./entrypointConsumer.sh
     env_file:
       - .env
@@ -33,10 +33,9 @@ services:
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
   fastapi:
-    build: ./awsServices
+    image: innotter:fastapi
     entrypoint: sh ./entrypointFastApi.sh
     container_name: fastapi-container
-    image: fastapi
     ports:
       - 80:80
     env_file:
@@ -49,8 +48,8 @@ services:
       rabbitmq:
         condition: service_healthy
   localstack:
+    image: innotter:localstack
     container_name: localstack_main
-    image: localstack/localstack
     hostname: localhost.localstack.cloud
     ports:
       - "4566:4566"      
@@ -70,7 +69,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "/s3:$HOME/s3"
   rabbitmq:
-    build: rabbitmq/.
+    image: innotter:innotter-rabbitmq
     hostname: my-rabbit
     ports:
       - 5672:5672
@@ -83,7 +82,7 @@ services:
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
   celery:
-    build: .
+    image: innotter:innotter-celery
     entrypoint: sh ./entrypointCelery.sh
     volumes:
       - .:/code
@@ -93,7 +92,7 @@ services:
       - rabbitmq
       - fastapi
   celery-beat:
-    build: .
+    image: innotter:innotter-celery-beat
     volumes:
       - .:/code
       - "/etc/localtime:/etc/localtime:ro"
