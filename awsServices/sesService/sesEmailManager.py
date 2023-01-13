@@ -1,9 +1,7 @@
 import boto3
 import logging
 import os
-from app.settings import *
 from botocore.exceptions import ClientError
-# from ses.client.exceptions import TemplateDoesNotExist
 
 
 LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
