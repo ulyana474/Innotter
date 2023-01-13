@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+python-dotenv = "*"
+djangorestframework = "*"
+psycopg2-binary = "*"
+psycopg2 = "*"
+pyjwt = "*"
+celery = "*"
+django-celery-beat = "*"
+redis = "*"
+pydantic = "*"
+fastapi = "*"
+localstack = "*"
+aio-pika = "*"
+uvicorn = "*"
+logger = "*"
+pika = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"

@@ -1,0 +1,104 @@
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+      - "/etc/localtime:/etc/localtime:ro"
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+  web:
+    build: .
+    volumes:
+      - .:/code
+      - "/etc/localtime:/etc/localtime:ro"
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - fastapi
+    links:
+      - "db:db"
+  consumer:
+    build: ./awsServices
+    entrypoint: sh ./entrypointConsumer.sh
+    env_file:
+      - .env
+    depends_on:
+      - fastapi
+      - localstack
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+  fastapi:
+    build: ./awsServices
+    entrypoint: sh ./entrypointFastApi.sh
+    container_name: fastapi-container
+    image: fastapi
+    ports:
+      - 80:80
+    env_file:
+      - ./.env
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+    depends_on:
+      localstack:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+  localstack:
+    container_name: localstack_main
+    image: localstack/localstack
+    hostname: localhost.localstack.cloud
+    ports:
+      - "4566:4566"      
+      - "4510-4559:4510-4559"
+    environment:
+      - TZ=America/Los_Angeles
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DATA_DIR=$HOME/s3
+      - SMTP_HOST=$SMTP_HOST
+      - SMTP_PASS=$SMTP_PASS
+      - SMTP_USER=$SMTP_USER
+    command: echo 'PST' >> /etc/timezone
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/s3:$HOME/s3"
+  rabbitmq:
+    build: rabbitmq/.
+    hostname: my-rabbit
+    ports:
+      - 5672:5672
+      - 15672:15672
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+  celery:
+    build: .
+    entrypoint: sh ./entrypointCelery.sh
+    volumes:
+      - .:/code
+      - "/etc/localtime:/etc/localtime:ro"
+    depends_on:
+      - db
+      - rabbitmq
+      - fastapi
+  celery-beat:
+    build: .
+    volumes:
+      - .:/code
+      - "/etc/localtime:/etc/localtime:ro"
+    depends_on:
+      - db
+      - rabbitmq
+      - fastapi
+    
