@@ -9,7 +9,7 @@ services:
     ports:
       - "5432:5432"
   web:
-    build: .
+    image: ulyana474/innotter-web
     volumes:
       - .:/code
       - "/etc/localtime:/etc/localtime:ro"
@@ -23,7 +23,7 @@ services:
     links:
       - "db:db"
   consumer:
-    build: ./awsServices
+    image: ulyana474/innotter-consumer
     entrypoint: sh ./entrypointConsumer.sh
     env_file:
       - .env
@@ -33,10 +33,9 @@ services:
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
   fastapi:
-    build: ./awsServices
+    image: ulyana474/fastapi
     entrypoint: sh ./entrypointFastApi.sh
     container_name: fastapi-container
-    image: fastapi
     ports:
       - 80:80
     env_file:
@@ -49,8 +48,8 @@ services:
       rabbitmq:
         condition: service_healthy
   localstack:
-    container_name: localstack_main
     image: localstack/localstack
+    container_name: localstack_main
     hostname: localhost.localstack.cloud
     ports:
       - "4566:4566"      
@@ -83,7 +82,7 @@ services:
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
   celery:
-    build: .
+    image: ulyana474/innotter-celery
     entrypoint: sh ./entrypointCelery.sh
     volumes:
       - .:/code
@@ -93,7 +92,7 @@ services:
       - rabbitmq
       - fastapi
   celery-beat:
-    build: .
+    image: ulyana474/innotter-celery-beat
     volumes:
       - .:/code
       - "/etc/localtime:/etc/localtime:ro"
