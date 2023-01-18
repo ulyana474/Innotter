@@ -1,0 +1,67 @@
+.button-sign-in {
+  background-color: #0070A0;
+  border: none;
+  color: white;
+  padding: 3%;
+  width: 30%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0 auto;
+}
+
+
+.form-block {
+    width: 40%;
+    height: auto;
+    background-color: rgba(0, 112, 160, 11%);
+    margin: auto;
+    padding: 3%;
+}
+
+
+.welcome-message {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+.welcome-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    font-size: 30pt;
+}
+
+
+.welcome-image {
+    width: 10%;
+    height: 0.5%;
+    margin-top: 3%;
+}
+
+
+.flex-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.label {
+    margin-right: 40%;
+}
+
+
+input[type=text].signin-line {
+    color: black;
+    border: none;
+    width: 55%;
+    height: 2.5em;
+    caret-color: transparent;
+    margin-bottom: 5%;
+}

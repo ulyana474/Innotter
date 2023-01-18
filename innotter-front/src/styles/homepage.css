@@ -1,0 +1,120 @@
+.body {
+    font-family: 'Inter', sans-serif;
+    margin-top: 0.0em;
+    height: 100%;
+    width: 100%;
+}
+
+.button-sign-up {
+  background-color: #0070A0;
+  border: none;
+  color: white;
+  padding: 3%;
+  width: 50%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0 auto;
+}
+
+.button-register {
+    background-color: #0070A0;
+    border: none;
+    color: white;
+    padding: 3%;
+    width: 50%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0 auto;
+    margin-top: 7%;
+    margin-bottom: 7%;
+}
+
+
+.flex-list-my-page {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.upper-line {
+    margin-top: 0.0em;
+    background-color: #0070A0;
+    color: #0070A0;
+    width: 100%;
+    height: 0.5%;
+    max-height: 1%;
+    margin-bottom: 0;
+}
+
+
+.grid-logo-search {
+    display: grid;
+    grid-template-columns: 1.2fr 2fr 1fr;
+    grid-auto-rows: minmax(20%, auto);
+    grid-template-areas: "login search my_page";
+    background-color: white;
+    grid-gap: 10%;
+}
+
+.grid-item-log {
+    display: flex;
+    flex-direction: column;
+    padding: 1% 2% 2% 1%;
+    background-color: rgba(0, 112, 160, 11%);
+}
+
+.grid-item-search {
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+}
+
+.search-fields {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    width: auto;
+    height: 40%;
+    margin-top: 10%;
+}
+
+
+.innotter-logo {
+    margin-bottom: 3%;
+}
+
+
+.post-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.homepage-my-page {
+    width: 40%;
+    margin-top: 7%;
+}
+
+
+ul.horizontal-list {
+    list-style: none;
+}
+
+
+ul.horizontal-list li {
+    display: inline-block;
+    padding: 0 0.5rem;
+    min-width: 7rem;
+    text-align: center;
+    font-size: 17pt;
+    margin-top: 5%;
+}
+
+
+ul.horizontal-list li:not(:last-child) {
+    border-right: 1px solid #0070A0;
+  }
