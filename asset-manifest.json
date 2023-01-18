@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.22d4ed8c.css",
-    "main.js": "/static/js/main.d096a780.js",
-    "static/js/787.80a6a293.chunk.js": "/static/js/787.80a6a293.chunk.js",
-    "static/media/logo.svg": "/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
-    "static/media/my_page.svg": "/static/media/my_page.b0382ce59b13a7d70ae22518885b4e10.svg",
-    "static/media/smile.svg": "/static/media/smile.c26770fa84110052e8cff17747abc40d.svg",
-    "static/media/liked.svg": "/static/media/liked.a7720fe6c8c77b2c5ff200854f8bed56.svg",
-    "static/media/like.svg": "/static/media/like.e16172f6c42856c4bb6ef17103cc6b50.svg",
-    "index.html": "/index.html",
-    "static/media/search.svg": "/static/media/search.088d8e67913502120b55.svg",
-    "static/media/post.svg": "/static/media/post.0f3462c91cc7fbbc867676a9e4c79ead.svg",
-    "main.22d4ed8c.css.map": "/static/css/main.22d4ed8c.css.map",
-    "main.d096a780.js.map": "/static/js/main.d096a780.js.map",
-    "787.80a6a293.chunk.js.map": "/static/js/787.80a6a293.chunk.js.map"
+    "main.css": "/Innotter/static/css/main.866351d4.css",
+    "main.js": "/Innotter/static/js/main.09ddce54.js",
+    "static/js/787.80a6a293.chunk.js": "/Innotter/static/js/787.80a6a293.chunk.js",
+    "static/media/logo.svg": "/Innotter/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "static/media/my_page.svg": "/Innotter/static/media/my_page.b0382ce59b13a7d70ae22518885b4e10.svg",
+    "static/media/smile.svg": "/Innotter/static/media/smile.c26770fa84110052e8cff17747abc40d.svg",
+    "static/media/liked.svg": "/Innotter/static/media/liked.a7720fe6c8c77b2c5ff200854f8bed56.svg",
+    "static/media/like.svg": "/Innotter/static/media/like.e16172f6c42856c4bb6ef17103cc6b50.svg",
+    "index.html": "/Innotter/index.html",
+    "static/media/search.svg": "/Innotter/static/media/search.088d8e67913502120b55.svg",
+    "static/media/post.svg": "/Innotter/static/media/post.0f3462c91cc7fbbc867676a9e4c79ead.svg",
+    "main.866351d4.css.map": "/Innotter/static/css/main.866351d4.css.map",
+    "main.09ddce54.js.map": "/Innotter/static/js/main.09ddce54.js.map",
+    "787.80a6a293.chunk.js.map": "/Innotter/static/js/787.80a6a293.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.22d4ed8c.css",
-    "static/js/main.d096a780.js"
+    "static/css/main.866351d4.css",
+    "static/js/main.09ddce54.js"
   ]
 }
