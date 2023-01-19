@@ -1,0 +1,71 @@
+.grid-tags {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+}
+
+
+.flex-tags-blocks {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.new-tag-button {
+    display: grid;
+    grid-column-end: 2;
+    background-color: rgba(0, 112, 160, 11%);
+    border: none;
+    color: black;
+    padding: 3%;
+    width: 70%;
+    height: 2.5em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15pt;
+    margin: 5% auto;
+}
+
+
+.tag-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    background-color: rgba(0, 112, 160, 11%);
+    width: 50%;
+    height: 3.5em;
+    margin-bottom: 3%;
+    font-size: 15pt;
+}
+
+
+.tags-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3%;
+}
+
+
+.tags-my-page {
+    display: grid;
+    grid-column: 3;
+    width: 65%;
+    margin-top: 7%;
+}
+
+
+ul.tags-horizontal-list li{
+    display: inline-block;
+    padding: 0 0.5rem;
+    min-width: 7rem;
+    text-align: center;
+    font-size: 20pt;
+    margin-top: 5%;
+    justify-content: center;
+}
+
+
+ul.tags-horizontal-list li:not(:last-child) {
+    border-right: 1px solid #0070A0;
+  }
