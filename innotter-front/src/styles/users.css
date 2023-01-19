@@ -1,4 +1,4 @@
-.grid-users {
+.grid-logo {
     display: grid;
     grid-template-columns: 5fr 1fr;
 }
@@ -16,7 +16,7 @@ ul.users-horizontal-list li{
 
 ul.users-horizontal-list li:not(:last-child) {
     border-right: 1px solid #0070A0;
-  }
+}
 
 
 .logo {
@@ -57,6 +57,8 @@ ul.users-horizontal-list li:not(:last-child) {
     grid-column: 2;
     font-size: 17pt;
     align-items: center;
+    color: black;
+    text-decoration: none;
 }
 
 

@@ -1,18 +1,26 @@
-import React, {useState} from "react";
+import React from "react";
 import './App.css';
+import { Routes, Route } from 'react-router-dom'
 import Homepage from './components/Homepage';
 import Signin from './components/Signin';
 import Register from "./components/Register";
 import Users from "./components/Users";
+import Pages from "./components/Pages";
+import Tags from "./components/Tags";
+import UserAcc from "./components/UserAcc";
 
 function App() {
-  const [title, setTitle] = useState("Homepage");
   return (
     <div className="App">
-      {title === "Signin" && <Signin  setTitle= {setTitle}/>}
-      {title === "Homepage" && <Homepage  setTitle= {setTitle}/>}
-      {title === "Register" && <Register  setTitle= {setTitle}/>}
-      {title === "Users" && <Users  setTitle= {setTitle}/>}
+      <Routes>
+        <Route path="/Innotter" element={<Homepage />} />
+        <Route path="/sign" element={<Signin />} />
+        <Route path="/register" element={<Register />}></Route>
+        <Route path="/users" element={<Users />}></Route>
+        <Route path="/pages" element={<Pages />}></Route>
+        <Route path="/tags" element={<Tags />}></Route>
+        <Route path="/user-account" element={<UserAcc />}></Route>
+      </Routes>
     </div>
   );
 }

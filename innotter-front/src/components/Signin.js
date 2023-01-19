@@ -3,7 +3,7 @@ import '../styles/homepage.css'
 import '../styles/signin.css'
 import logo from '../images/logo.svg';
 
-const Signin = (props) => 
+const Signin = () => 
 <div>
     <div className="upper-line">line</div>
     <div className="welcome-message">

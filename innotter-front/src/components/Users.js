@@ -3,14 +3,15 @@ import '../styles/searchline.css'
 import '../styles/users.css'
 import '../styles/homepage.css'
 import my_page from '../images/my_page.svg';
-import logo from '../images/logo.svg';
 import like from '../images/liked.svg'
 import smile from '../images/smile.svg'
 import post from '../images/post.svg'
+import { Link } from 'react-router-dom'
 
 const Users = () => 
 <div>
-    <div className="grid-users">
+    <div className="upper-line">line</div>
+    <div className="grid-logo">
         <div className="logo-users">
             <ul className="users-horizontal-list">
                 <li>Innotter</li>
@@ -20,11 +21,11 @@ const Users = () =>
                 <input type="text" className="users-search-line"></input>
             </form>
         </div>
-        <div className="homepage-my-page"><img src={my_page}></img></div>
+        <div className="my-page"><img src={my_page}></img></div>
     </div>
     <div className="flex-user-blocks">
         <div className="user-block">
-            <p className="users-username">Username</p>
+            <Link to="/user-account" className="users-username">Username</Link>
             <div className="statistics">
                 <ul className="stat-list">
                     <li>173</li>

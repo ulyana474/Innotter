@@ -3,13 +3,13 @@ import '../styles/homepage.css'
 import '../styles/signin.css'
 import '../styles/register.css'
 
-const Register = (props) => 
+const Register = () => 
 <div>
     <div className="upper-line">line</div>
     <div className="welcome-message">
         <p className="welcome-text">Welcome to Innotter!</p>
     </div>
-    <div className="form-block">
+    <div className="register-form-block">
         <form className="flex-input">
             <label for="Username" className="label">username:</label>
             <input type="text" className="signin-line"></input>

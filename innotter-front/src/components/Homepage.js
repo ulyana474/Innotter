@@ -1,12 +1,13 @@
 import React from "react";
 import '../styles/homepage.css'
+import { Link } from 'react-router-dom'
 import Searchline from "./Searchline";
 import logo from '../images/logo.svg';
 import my_page from '../images/my_page.svg';
 import Post from "./Post";
 
 
-const Homepage = (props) => 
+const Homepage = () => 
     <body className="body">
         <div className="upper-line">line</div>
         <div className="grid-logo-search">
@@ -14,20 +15,20 @@ const Homepage = (props) =>
                 <div className="innotter-logo">
                     <img src={logo} alt="logo image"></img>
                 </div>
-                <button onClick={() => props.setTitle("Signin")} className="button-sign-up">sign in</button>
-                <button onClick={() => props.setTitle("Register")} className="button-register">register</button>
+                <Link to="/sign" className="button-sign-up">Sign in</Link>
+                <Link to="/register" className="button-register">Register</Link>
             </div>
             <div className="grid-item grid-item-search">
                 <div className="search-fields">
                     <ul className="horizontal-list">
-                        <li onClick={() => props.setTitle("Users")}>users</li>
-                        <li>pages</li>
-                        <li>tags</li>
+                        <li><Link to="/users" className="link-list">users</Link></li>
+                        <li><Link to="/pages" className="link-list">pages</Link></li>
+                        <li><Link to="/tags" className="link-list">tags</Link></li>
                     </ul>
                 </div>
                 <Searchline />
             </div>
-            <div className="homepage-my-page"><img src={my_page}></img></div>
+            <div className="my-page"><img src={my_page}></img></div>
         </div>
         <main className="post-wrapper">
             <Post id="upper-post"/>

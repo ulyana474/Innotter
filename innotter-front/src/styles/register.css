@@ -2,6 +2,17 @@
     margin-right: 29%;
 }
 
+
 .label_email {
     margin-right: 45%;
+}
+
+
+.register-form-block {
+    width: 40%;
+    height: auto;
+    background-color: rgba(0, 112, 160, 11%);
+    margin: auto;
+    padding: 3%;
+    margin-bottom: 5%;
 }

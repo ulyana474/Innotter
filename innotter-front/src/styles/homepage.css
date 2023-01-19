@@ -87,6 +87,12 @@
 }
 
 
+.link-list {
+    color: black;
+    text-decoration: none;
+}
+
+
 .post-wrapper {
     display: flex;
     flex-direction: column;
@@ -94,8 +100,8 @@
 }
 
 
-.homepage-my-page {
-    width: 40%;
+.my-page {
+    width: 55%;
     margin-top: 7%;
 }
 
