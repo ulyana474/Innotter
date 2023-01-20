@@ -1,0 +1,101 @@
+.grid-logo {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+
+ul.users-horizontal-list li{
+    display: inline-block;
+    padding: 0 0.5rem;
+    min-width: 7rem;
+    text-align: center;
+    font-size: 17pt;
+    margin-top: 5%;
+}
+
+
+ul.users-horizontal-list li:not(:last-child) {
+    border-right: 1px solid #0070A0;
+}
+
+
+.logo {
+    height: 3em;
+}
+
+
+.users {
+    font-size: 25pt;
+}
+
+
+.users-search-line {
+    background-color: rgba(0, 112, 160, 11%);
+    color: white;
+    border: 1px solid #0070A0;
+    background-image: url('../images/search.svg');
+    background-repeat: no-repeat;
+    background-position: 5% 35%;
+    background-size: 5%;
+    padding: 1% 1% 2% 1%;
+    caret-color: transparent;
+    margin-left: 15%;
+    width: 30%;
+    height: 0em;
+}
+
+
+.flex-user-blocks {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+}
+
+
+.users-username {
+    display: grid;
+    grid-column: 2;
+    font-size: 17pt;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+}
+
+
+.statistics {
+    display: grid;
+    grid-column: 4;
+    align-items: center;
+}
+
+
+.user-block {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 2fr 3fr;;
+    background-color: rgba(0, 112, 160, 11%);
+    margin: 0 8%;
+    padding: 2%;
+    height: 3em;
+    align-content: center;
+}
+
+
+ul.stat-list {
+    list-style: none;
+}
+
+
+ul.stat-list li {
+    display: inline;
+    padding: 0 0.5rem;
+    min-width: 7rem;
+    text-align: center;
+    font-size: 17pt;
+    margin-top: 5%;
+}
+
+
+.list-img {
+    height: 1em;
+    margin-top: auto;
+}

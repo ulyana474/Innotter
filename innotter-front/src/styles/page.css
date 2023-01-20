@@ -1,0 +1,50 @@
+.page-block {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 3%;
+    background-color: white;
+    border: 1px solid #0070A0;
+    width: 50%;
+    padding: 3%;
+}
+
+
+.flex-page-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+.page-name {
+    font-size: 3em;
+    margin-right: 15%;
+    height: 30%;
+    width: 3.5em;
+}
+
+
+.page-text {
+    text-align: justify;
+    text-indent: 5%;
+    line-height: 24px;
+    font-size: 13pt;
+    padding: 2%;
+    background-color: white;
+    margin-bottom: 5%;
+}
+
+
+.see-page-button {
+  background-color: rgba(0, 112, 160, 11%);
+  border: none;
+  color: black;
+  padding: 3%;
+  width: 30%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15pt;
+  margin: 0 auto;
+}

@@ -1,0 +1,157 @@
+hr {
+    border-top: 1px solid black;
+    width: 100%;
+}
+
+.grid-user-page {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+}
+
+
+.logo-user-page {
+    margin-left: 5%;
+}
+
+
+.page-descr {
+    width: 100%;
+}
+
+
+.page-tags {
+    display: flex;
+    justify-content: left;
+}
+
+
+.page-uuid {
+    display: flex;
+    padding: 3%;
+}
+
+
+.user-image {
+    display: flex;
+    margin-left: 10%;
+}
+
+
+.user-page-block {
+    display: flex;
+    background-color: white;
+    border: 1px solid #0070A0;
+    border-bottom: white;
+    width: 80%;
+    height: auto;
+    margin: auto;
+    margin-top: 20%;
+}
+
+
+.user-page-pagename {
+    font-size: 15pt;
+    margin-right: 5%;
+}
+
+
+.user-page-username {
+    font-size: 25pt;
+    margin-bottom: 0%;
+}
+
+
+.flex-row-page-info {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 3%;
+    height: 80%;
+}
+
+
+.flex-column-user-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: -30%;
+    height: 10%;
+}
+
+
+
+.flex-column-link-descr {
+    display: flex;
+    flex-direction: column;
+}
+
+
+ul.tags-list {
+    list-style: none;
+}
+
+
+ul.tags-list li {
+    display: inline-block;
+    min-width: 7rem;
+    font-size: 10pt;
+}
+
+
+.link-posts-followers {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.link-text {
+    border: 1px solid #0070A0;
+    border-top: white;
+    grid-column-start: 2;
+    width: 74%;
+    padding: 3%;
+    padding-top: 0%;
+    margin: auto;
+    margin-bottom: 10%;
+}
+
+
+.page-descr {
+    font-family: 'Inter', sans-serif;
+    text-align: justify;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    text-indent: 5%;
+    line-height: 24px;
+    font-size: 13pt;
+    background-color: white;
+    margin-bottom: 5%;
+}
+
+
+.see-followers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    color: #0070A0;
+    text-decoration: underline;
+    font-size: 15pt;
+    font-weight: bold;
+}
+
+
+.see-posts {
+    font-size: 15pt;
+    width: 100%;
+    color: #0070A0;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+
+.user-my-page {
+    display: grid;
+    grid-column-start: 3;
+    margin-top: 5%;
+}

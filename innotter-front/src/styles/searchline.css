@@ -1,0 +1,21 @@
+
+
+input[type=text].search-line {
+    background-color: rgba(0, 112, 160, 11%);
+    color: white;
+    border: 1px solid #0070A0;
+    background-image: url('../images/search.svg');
+    background-repeat: no-repeat;
+    background-position: 5% 35%;
+    background-size: 5%;
+    padding: 1% 1% 2% 1%;
+    width: 85%;
+    height: 25%;
+    caret-color: transparent;
+    margin-left: 15%;
+}
+
+input[type=text]:focus.search-line {
+    border: 3px solid #0070A0;
+}
+
