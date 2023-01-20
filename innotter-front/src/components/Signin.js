@@ -1,7 +1,7 @@
 import React from "react";
 import '../styles/homepage.css'
 import '../styles/signin.css'
-import logo from '../images/logo.svg';
+
 
 const Signin = () => 
 <div>
