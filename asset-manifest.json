@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Innotter/static/css/main.a131272e.css",
+    "main.css": "/Innotter/static/css/main.6b1b553a.css",
     "main.js": "/Innotter/static/js/main.3d14a8d8.js",
     "static/js/787.80a6a293.chunk.js": "/Innotter/static/js/787.80a6a293.chunk.js",
     "static/media/page.svg": "/Innotter/static/media/page.4b804766524cf570bcbbe8e6b8e16c01.svg",
@@ -12,12 +12,12 @@
     "index.html": "/Innotter/index.html",
     "static/media/search.svg": "/Innotter/static/media/search.088d8e67913502120b55.svg",
     "static/media/post.svg": "/Innotter/static/media/post.0f3462c91cc7fbbc867676a9e4c79ead.svg",
-    "main.a131272e.css.map": "/Innotter/static/css/main.a131272e.css.map",
+    "main.6b1b553a.css.map": "/Innotter/static/css/main.6b1b553a.css.map",
     "main.3d14a8d8.js.map": "/Innotter/static/js/main.3d14a8d8.js.map",
     "787.80a6a293.chunk.js.map": "/Innotter/static/js/787.80a6a293.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a131272e.css",
+    "static/css/main.6b1b553a.css",
     "static/js/main.3d14a8d8.js"
   ]
 }
