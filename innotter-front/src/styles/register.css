@@ -16,3 +16,46 @@
     padding: 3%;
     margin-bottom: 5%;
 }
+
+
+
+@media only screen and (max-width: 890px) {
+.register-form-block {
+    width: auto;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+
+.label_confirm {
+    margin-left: -3%;
+}
+}
+
+
+@media only screen and (max-width: 495px) {
+.signin-line {
+    width: 80%;
+}
+
+
+.label_confirm {
+    margin-left: 3%;
+}
+
+
+.label_email {
+    margin-left: -3%;
+}
+}
+
+
+@media only screen and (max-width: 435px) {
+.label_confirm {
+    margin-left: 6%;
+}
+
+.label_email {
+    margin-left: -5%;
+}
+}

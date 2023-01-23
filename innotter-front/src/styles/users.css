@@ -99,3 +99,56 @@ ul.stat-list li {
     height: 1em;
     margin-top: auto;
 }
+
+
+
+@media only screen and (max-width: 969px) {
+ul.stat-list {
+    display: block ruby;
+    margin-right: 105%;
+}
+}
+
+
+@media only screen and (max-width: 600px) {
+.users-search-line {
+    width: 50%;
+    height: auto;
+}
+}  
+
+
+
+@media only screen and (max-width: 540px) {
+.users-username {
+    font-size: 15pt;
+}
+
+
+.list-img {
+    height: 0.75em;
+}
+
+
+ul.stat-list li {
+    font-size: 12pt;
+    padding: 0.4rem;
+}
+
+
+ul.stat-list {
+    margin-right: 5em;
+}
+}
+
+
+@media only screen and (max-width: 375px) {
+ul.stat-list {
+    margin-right: 7em;
+}
+
+
+.users-username {
+    font-size: 12pt;
+}
+}

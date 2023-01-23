@@ -2,7 +2,7 @@ import React from "react";
 import '../styles/searchline.css'
 
 const Searchline = () => 
-    <form>
+    <form className="search-input">
         <input type="text" className="search-line"></input>
     </form>
 

@@ -48,3 +48,23 @@
   font-size: 15pt;
   margin: 0 auto;
 }
+
+
+@media only screen and (max-width: 894px) {
+.page-block {
+    width: auto;
+    margin-left: 7%;
+    margin-right: 7%;
+}
+}
+
+
+@media only screen and (max-width: 614px) {
+.page-name {
+    font-size: 2em;
+}
+
+.page-img {
+    width: 50%;
+}
+}

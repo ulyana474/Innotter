@@ -65,3 +65,36 @@ input[type=text].signin-line {
     caret-color: transparent;
     margin-bottom: 5%;
 }
+
+
+@media only screen and (max-width: 760px) {
+.welcome-text {
+    font-size: 20pt;
+}
+
+
+.form-block {
+    width: auto;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+}
+
+
+@media only screen and (max-width: 420px) {
+.form-block {
+    height: 19em;
+    padding-top: 13%;
+}
+
+
+input[type="text"].signin-line {
+    width: 75%;
+}
+
+
+.label {
+    margin-right: 50%;
+}
+}
+
