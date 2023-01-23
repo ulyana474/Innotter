@@ -19,3 +19,23 @@ input[type=text]:focus.search-line {
     border: 3px solid #0070A0;
 }
 
+
+@media only screen and (max-width: 770px) {
+
+input[type=text].search-line {
+    caret-color: transparent;
+    width: 50em;
+}  
+
+
+.grid-item-grid-item-search {
+    width: 100%;
+}
+
+}
+
+input[type=text].search-line {
+    display: none;
+}
+
+

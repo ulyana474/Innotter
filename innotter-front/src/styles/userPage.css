@@ -155,3 +155,237 @@ ul.tags-list li {
     grid-column-start: 3;
     margin-top: 5%;
 }
+
+
+@media only screen and (max-width: 984px) {
+.user-image {
+    width: 50%;
+}
+
+
+.user-page-username {
+    font-size: 15pt;
+}
+
+
+.user-page-pagename {
+    margin-right: 0%;
+}
+
+
+.user-my-page {
+    display: none;
+}
+
+
+.flex-column-user-info {
+    margin-top: 5%;
+}
+}
+
+
+@media only screen and (max-width: 830px) {
+.user-page-block {
+    margin-top: 35%;
+}
+}
+
+
+@media only screen and (max-width: 730px) {
+.user-page-block {
+    width: auto;
+}
+
+
+.link-text {
+    width: auto;
+}
+}
+
+
+@media only screen and (max-width: 650px) {
+.logo-user-page {
+    margin-left: 100%;
+}
+
+.user-page-block {
+    margin-top: 70%;
+    margin-left: -18%;
+    margin-right: 10%;
+}
+
+
+.link-text {
+    margin-left: -18%;
+    margin-right: 10%;
+}
+}
+
+
+@media only screen and (max-width: 530px) {
+.page-uuid {
+    font-size: 10pt;
+}
+
+
+.logo-user-page {
+    margin-left: 80%;
+}
+
+
+.user-page-block {
+    margin-top: 70%;
+    margin-left: -38%;
+    margin-right: 10%;
+}
+
+
+.link-text {
+    margin-left: -38%;
+    margin-right: 10%;
+}
+
+
+.flex-row-page-info {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.user-image { 
+    margin-left: -13%;
+    width: 90%;
+}
+}
+
+
+@media only screen and (max-width: 500px) {
+.link-text {
+    width: 150%;
+    margin-right: -15%;
+    margin: auto;
+    margin-left: -50%;
+}
+
+
+.user-page-block { 
+    width: 156%;
+    margin-left: -50%;
+}
+}
+
+
+@media only screen and (max-width: 460px) {
+.page-descr {
+    font-size: 10pt;
+}
+
+
+.see-followers {
+    font-size: 13pt;
+}
+
+
+.see-posts {
+    font-size: 13pt;
+}
+}
+
+
+
+@media only screen and (max-width: 420px) {
+.link-text {
+    width: 170%;
+    margin-right: -25%;
+    margin: auto;
+    margin-left: -70%;
+}
+
+
+.user-page-block { 
+    width: 176%;
+    height: 80%;
+    margin-right: -35%;
+    margin: auto;
+    margin-left: -70%;
+    margin-top: 100%;
+}    
+
+.user-image {
+    width: 130%;
+    margin-left: -35%;
+}
+
+
+.logo-user-page {
+    margin-left: 50%;
+}
+
+
+.user-page-pagename {
+    font-size: 10pt;
+    margin-top: -6%;
+}
+
+
+.user-page-username {
+    font-size: 10pt;
+    margin-bottom: 15%;
+    margin-top: -6%;
+    margin-right: 10%;
+}
+
+
+.flex-column-user-info {
+    display: flex;
+    flex-direction: row;
+}
+}
+
+
+
+@media only screen and (max-width: 390px) {
+.link-text {
+    width: 190%;
+    margin: auto;
+    margin-left: -90%;
+}
+
+
+.user-page-block { 
+    width: 196%;
+    height: 80%;
+    margin: auto;
+    margin-left: -90%;
+    margin-top: 100%;
+} 
+}
+
+
+@media only screen and (max-width: 380px) {
+.link-text {
+    margin-left: -100%;
+}
+
+
+.user-page-block {
+    margin-left: -100%;
+}
+}
+
+
+@media only screen and (max-width: 370px) {
+.link-text {
+    margin-left: -110%;
+}
+
+
+.user-page-block {
+    margin-left: -110%;
+}   
+
+
+.logo-user-page {
+    margin-left: 45%;
+}
+}

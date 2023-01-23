@@ -64,3 +64,52 @@ input[type=text].post-reply {
     grid-column: 3;
     width: 35%;
 }
+
+
+@media only screen and (max-width: 1225px) {
+.post-created-time {
+    width: 60%;
+    margin-left: 40%;
+}
+}
+
+
+@media only screen and (max-width: 1120px) {
+.post-block {
+    width: 80%;
+    margin: 3% 5% 0 5%;
+}
+
+.post-created-time {
+    width: 60%;
+    margin-left: 40%;
+}
+
+.post-username {
+    margin-left: -40%;
+}
+}
+
+
+@media only screen and (max-width: 874px) {
+.post-username {
+    margin-left: 10%;
+}
+}
+
+
+@media only screen and (max-width: 770px) { 
+.post-block {
+    width: 80%;
+    margin: 5% 20% 0 20%;
+}
+
+.post-username {
+    margin-left: 15%;
+}
+}
+
+
+@media only screen and (max-width: 580px) { 
+
+}

@@ -124,3 +124,198 @@ ul.horizontal-list li {
 ul.horizontal-list li:not(:last-child) {
     border-right: 1px solid #0070A0;
   }
+
+
+/* ------------------adaptive--------------------- */
+
+@media only screen and (min-width: 1120px ) {
+
+.navbar-toggler {
+    display: none;
+}
+}
+
+
+@media only screen and (max-width: 1120px) {
+
+ul.horizontal-list li {
+    display: inline-block;
+    padding: 0 0.5rem;
+    min-width: 14rem;
+    text-align: center;
+    font-size: 17pt;
+    margin-top: 5%;
+    margin-bottom: 2%;
+} 
+
+
+ul.horizontal-list li:not(:last-child) {
+    margin-bottom: 2%;
+    border-bottom: 1px solid #0070A0;
+    border-right: none;
+  }
+
+
+.post-wrapper {
+    margin-top: 10%;
+}
+
+.navbar-toggler {
+    display: none;
+}
+}
+
+@media only screen and (max-width: 770px) {
+
+ul.horizontal-list li {
+    display: none;
+}
+
+
+.my-page {
+    width: 25%;
+    display: none;
+}
+
+
+.innotter-logo {
+   margin-left: 120%;
+   width: 100%;
+   z-index: 50;
+   margin-top: 4%;
+}
+
+
+.grid-item.grid-item-log {
+    background-color: white;
+}
+
+
+.button-sign-up {
+    display: none;
+}
+
+
+.button-register {
+    display: none;
+}
+
+
+.grid-item-search {
+    display: flex;
+    justify-content: flex-end;
+    width: 80%;
+    height: 50%;
+    margin-top: 15%;
+}
+
+
+.navbar-toggler {
+    display: flex;
+    margin-left: 250%;
+    min-width: 100%;
+    background-color: white;
+    border: 1px solid white;
+    position: relative;
+    cursor: pointer;
+}
+
+
+.navbar-toggler:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    background-color: black;
+    height: 2px;
+    width: 80%;
+}
+
+
+.navbar-toggler:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    background-color: black;
+    height: 2px;
+    width: 80%;
+}
+
+ 
+.navbar-toggler span {
+    position: absolute;
+    top: 10px;
+    background-color: black;
+    height: 2px;
+    width: 80%;
+}
+
+.grid-item.grid-item-log {
+    width: 0;
+    margin-left: 40%;
+}
+
+}
+
+
+
+@media only screen and (max-width: 448px) {
+.navbar-toggler {
+    margin-left: 155%;
+    margin-top: 30%;
+    height: 100%;
+}
+}
+
+
+@media only screen and (max-width: 375px) {
+
+.grid-logo-search {
+    display: grid;
+    justify-content: flex-end;
+}
+
+
+.grid-item-search {
+    display: none;
+}
+
+
+.search-fields {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    width: auto;
+    height: 60%;
+    margin-top: 10%;
+    margin-left: 20em;
+    width: 80%;
+}
+
+.navbar-toggler:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    background-color: black;
+    height: 2px;
+    width: 80%;
+}
+
+
+.navbar-toggler:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    background-color: black;
+    height: 2px;
+    width: 80%;
+}
+
+ 
+.navbar-toggler span {
+    position: absolute;
+    top: 12px;
+    background-color: black;
+    height: 2px;
+    width: 80%;
+}
+}
