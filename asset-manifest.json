@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Innotter/static/css/main.6b1b553a.css",
-    "main.js": "/Innotter/static/js/main.3d14a8d8.js",
+    "main.css": "/Innotter/static/css/main.d6983694.css",
+    "main.js": "/Innotter/static/js/main.e688bd8a.js",
     "static/js/787.80a6a293.chunk.js": "/Innotter/static/js/787.80a6a293.chunk.js",
     "static/media/page.svg": "/Innotter/static/media/page.4b804766524cf570bcbbe8e6b8e16c01.svg",
     "static/media/logo.svg": "/Innotter/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
@@ -10,14 +10,15 @@
     "static/media/liked.svg": "/Innotter/static/media/liked.a7720fe6c8c77b2c5ff200854f8bed56.svg",
     "static/media/like.svg": "/Innotter/static/media/like.e16172f6c42856c4bb6ef17103cc6b50.svg",
     "index.html": "/Innotter/index.html",
+    "static/media/cross.svg": "/Innotter/static/media/cross.df34d8c448ce2494ab67499c968c7d89.svg",
     "static/media/search.svg": "/Innotter/static/media/search.088d8e67913502120b55.svg",
     "static/media/post.svg": "/Innotter/static/media/post.0f3462c91cc7fbbc867676a9e4c79ead.svg",
-    "main.6b1b553a.css.map": "/Innotter/static/css/main.6b1b553a.css.map",
-    "main.3d14a8d8.js.map": "/Innotter/static/js/main.3d14a8d8.js.map",
+    "main.d6983694.css.map": "/Innotter/static/css/main.d6983694.css.map",
+    "main.e688bd8a.js.map": "/Innotter/static/js/main.e688bd8a.js.map",
     "787.80a6a293.chunk.js.map": "/Innotter/static/js/787.80a6a293.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6b1b553a.css",
-    "static/js/main.3d14a8d8.js"
+    "static/css/main.d6983694.css",
+    "static/js/main.e688bd8a.js"
   ]
 }
