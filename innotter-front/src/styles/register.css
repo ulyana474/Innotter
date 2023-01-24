@@ -1,61 +1,43 @@
-.label_confirm {
-    margin-right: 29%;
+.register-form {
+    display: flex;
+    flex-direction: column;
 }
 
-
-.label_email {
-    margin-right: 45%;
-}
-
-
-.register-form-block {
-    width: 40%;
-    height: auto;
-    background-color: rgba(0, 112, 160, 11%);
-    margin: auto;
-    padding: 3%;
-    margin-bottom: 5%;
-}
-
-
-
-@media only screen and (max-width: 890px) {
-.register-form-block {
-    width: auto;
+.register-container {
     margin-left: 10%;
     margin-right: 10%;
 }
 
+.register.register_wrapper {
+    background-color: rgba(0, 112, 160, 11%);
+    padding: 5%;
+    margin-top: 5%;
+    margin: 100px;
+}
 
-.label_confirm {
-    margin-left: -3%;
+@media only screen and (max-width: 730px) {
+.register.register_wrapper {
+    width: 70%;
+    margin-left: 5em;
 }
 }
 
 
-@media only screen and (max-width: 495px) {
-.signin-line {
-    width: 80%;
-}
-
-
-.label_confirm {
-    margin-left: 3%;
-}
-
-
-.label_email {
-    margin-left: -3%;
+@media only screen and (max-width: 528px) {
+.register.register_wrapper {
+    width: 70%;
+    margin-left: 3em;
 }
 }
 
 
-@media only screen and (max-width: 435px) {
-.label_confirm {
-    margin-left: 6%;
+@media only screen and (max-width: 466px) {
+.register.register_wrapper {
+    width: 90%;
+    margin-left: 0.75em;
 }
 
-.label_email {
-    margin-left: -5%;
+.question {
+    font-size: 10pt;
 }
 }

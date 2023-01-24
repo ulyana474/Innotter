@@ -9,92 +9,92 @@
   display: inline-block;
   font-size: 16px;
   margin: 0 auto;
+  margin-top: 5%;
 }
 
 
-.form-block {
-    width: 40%;
-    height: auto;
+.input-mui {
+    background-color: white;
+    margin-bottom: 15%;
+    width: auto;
+}
+
+
+.signup {
+    color: #0070A0;
+}
+
+.signin.signin_wrapper {
     background-color: rgba(0, 112, 160, 11%);
-    margin: auto;
-    padding: 3%;
+    padding: 5%;
+    margin-top: 5%;
+    margin: 100px;
 }
 
 
-.welcome-message {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-
-.welcome-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    font-size: 30pt;
-}
-
-
-.welcome-image {
-    width: 10%;
-    height: 0.5%;
-    margin-top: 3%;
-}
-
-
-.flex-input {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.label {
-    margin-right: 40%;
-}
-
-
-input[type=text].signin-line {
-    color: black;
-    border: none;
-    width: 55%;
-    height: 2.5em;
-    caret-color: transparent;
-    margin-bottom: 5%;
-}
-
-
-@media only screen and (max-width: 760px) {
-.welcome-text {
-    font-size: 20pt;
-}
-
-
-.form-block {
-    width: auto;
+.container {
     margin-left: 10%;
     margin-right: 10%;
+}
+
+
+.signin-form {
+    display: flex;
+    flex-direction: column;
+}
+
+@media only screen and (max-width: 640px) {
+.container {
+    width: auto;
+    margin-right: -3%;
+    margin-left: -3%;
+}
+}
+
+
+@media only screen and (max-width: 466px) {
+.container {
+    width: 30em;
+    margin-right: 10%;
+}
+
+
+.welcome-text {
+    font-size: 15pt;
+}
+
+
+.signup-text {
+    font-size: 10pt;
+}
+
+
+.signup {
+    font-size: 10pt;
 }
 }
 
 
 @media only screen and (max-width: 420px) {
-.form-block {
-    height: 19em;
-    padding-top: 13%;
+.signin.signin_wrapper {
+    margin: 70px;
+}
+
+.container {
+    width: 110%;
+    padding-right: 3%;
+}
 }
 
 
-input[type="text"].signin-line {
-    width: 75%;
+@media only screen and (max-width: 380px) {
+.container {
+    width: 110%;
+    padding-right: 13%;
 }
 
-
-.label {
-    margin-right: 50%;
+.signin.signin_wrapper {
+    margin: 70px;
 }
 }
 
