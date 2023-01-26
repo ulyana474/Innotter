@@ -20,6 +20,7 @@ aio-pika = "*"
 uvicorn = "*"
 logger = "*"
 pika = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
