@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'posts',
     'django_celery_beat',
     'rest_framework.authtoken',
-    'corsheaders'
+    'corsheaders',
 ]
 
 # Application definition
