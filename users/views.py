@@ -56,6 +56,7 @@ def login(request):
     response.set_cookie(key='refreshtoken', value=refresh_token, httponly=True)
     response.data = {
         'access_token': access_token,
+        'refresh_token': refresh_token,
         'user': serialized_user,
     }
 
